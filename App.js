@@ -22,11 +22,11 @@ export default class App extends React.Component {
 
   makeRemoteRequest = () => {
     const {seed, page} = this.state;
-    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+    const url = `https://api.coinmarketcap.com/v1/ticker/`;
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      this.setState({data: res.results})
+      console.log(res)
       
     })
     .catch(error => {
