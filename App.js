@@ -115,7 +115,8 @@ export default class App extends React.Component {
             renderItem={({ item }) => (
               <ListItem
                 roundAvatar
-                title={`${item.name}`}
+                title={`${item.symbol} ${item.name}`}
+                subtitle={`$${item.price_usd}`}
                 containerStyle={{ borderBottomWidth: 0 }}
               />
             )}
