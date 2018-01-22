@@ -29,13 +29,14 @@ export default class App extends React.Component {
     .then(res => res.json())
     .then(res => {
       console.log(res)
-      this.setState({data: res})
+      this.setState({data: res, refreshing: false})
     })
     .catch(error => {
       this.setState({error, loading: false});
     })
   }
   handleRefresh = () => {
+    console.log("refreshing")
     this.setState(
       {
         page: 1,
@@ -53,9 +54,7 @@ export default class App extends React.Component {
       {
         page: this.state.page + 1
       },
-      () => {
-        this.makeRemoteRequest();
-      }
+
     );
   };
 
@@ -93,7 +92,6 @@ export default class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.data)
     return (
       <View style={styles.container}>
         <Button
@@ -104,16 +102,13 @@ export default class App extends React.Component {
           textStyle={{textAlign: 'center'}}
           title={`Welcome to\nReact Native Elements`}
         />
-        
-        <Image
-          source={{uri: 'https://i.chzbgr.com/full/7345954048/h7E2C65F9/'}}
-          style={{width: 320, height:180}}
-        />
+      
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
               <ListItem
+                onPressRightIcon={()=>{Alert.alert(`Change:${item.percent_change_24h}`)}}
                 roundAvatar
                 title={`${item.symbol} ${item.name}`}
                 subtitle={`$${item.price_usd}`}
