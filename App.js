@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList } from 'react-native';
-import { Button, Header, List, ListItem, SearchBar } from 'react-native-elements';
+import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
 
 
 export default class App extends React.Component {
@@ -57,7 +57,9 @@ export default class App extends React.Component {
 
     );
   };
-
+  pressedRightIcon = () => {
+    Alert.alert('tapped button')
+  }
   renderSeparator = () => {
     return (
       <View
@@ -107,13 +109,15 @@ export default class App extends React.Component {
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <ListItem
-                onPressRightIcon={()=>{Alert.alert(`Change:${item.percent_change_24h}`)}}
-                roundAvatar
-                title={`${item.symbol} ${item.name}`}
-                subtitle={`$${item.price_usd}`}
-                containerStyle={{ borderBottomWidth: 0 }}
-              />
+              <View>
+                <ListItem
+                  onPressRightIcon={this.pressedRightIcon}
+                  roundAvatar
+                  title={`${item.symbol} ${item.name}`}
+                  subtitle={`$${item.price_usd}`}
+                  containerStyle={{ borderBottomWidth: 0 }}
+                />
+              </View>
             )}
             keyExtractor={item => item.name}
             ItemSeparatorComponent={this.renderSeparator}
