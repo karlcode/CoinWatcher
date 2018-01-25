@@ -5,6 +5,9 @@ import {StackNavigator} from 'react-navigation';
 
 
 export default class App extends React.Component {
+  static navigationOptions= ({ navigation }) => ({
+    title: 'Home'
+  })
   constructor(props){
     super(props);
 
@@ -58,9 +61,6 @@ export default class App extends React.Component {
 
     );
   };
-  pressedRightIcon = () => {
-    Alert.alert('tapped button')
-  }
   renderSeparator = () => {
     return (
       <View
@@ -99,12 +99,13 @@ export default class App extends React.Component {
       <View style={styles.container}>
 
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+        
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
               <View>
                 <ListItem
-                  onPressRightIcon={this.pressedRightIcon}
+                  onPressRightIcon={() => this.props.navigation.navigate('SecondScreen')}
                   roundAvatar
                   title={`${item.symbol} ${item.name}`}
                   subtitle={`$${item.price_usd}`}
@@ -133,7 +134,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffff',
     justifyContent: 'center',
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
   },
   item: {
     padding: 10,
