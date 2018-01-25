@@ -105,7 +105,7 @@ export default class App extends React.Component {
             renderItem={({ item }) => (
               <View>
                 <ListItem
-                  onPressRightIcon={() => this.props.navigation.navigate('SecondScreen')}
+                  onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}
                   roundAvatar
                   title={`${item.symbol} ${item.name}`}
                   subtitle={`$${item.price_usd}`}

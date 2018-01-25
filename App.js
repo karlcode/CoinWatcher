@@ -14,7 +14,7 @@ const AppRoot = StackNavigator(
     },
     SecondScreen: { screen: SecondScreen,
       navigationOptions: ({ navigation }) => ({
-        title: 'Second Screen'
+        title: `${navigation.state.params.name}`,
       })
     },
   },
