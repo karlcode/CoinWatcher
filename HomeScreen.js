@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, ListView } from 'react-native';
 import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
 
 
@@ -11,6 +11,7 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
 
+    this.ds = new ListView.DataSource({rowHasChanged: (prevRow, nextRow) => prevRow !== nextRow})
     this.state = {
       loading: false,
       data: [],
@@ -32,8 +33,8 @@ export default class App extends React.Component {
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      console.log(res)
-      this.setState({data: res, refreshing: false})
+      this.setState({data: this.ds.cloneWithRows(res), refreshing: false})
+      console.log(this.ds.getRowAndSectionCount())
     })
     .catch(error => {
       this.setState({error, loading: false});
@@ -109,7 +110,7 @@ export default class App extends React.Component {
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <TouchableHighlight activteOpacity='0.1' underlayColor='grey' onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
+              <TouchableHighlight activteOpacity='0.1' underlayColor='rgba(0, 0, 0, 1, 0.6)' onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
                 <View>
                 <ListItem
                   
