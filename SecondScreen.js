@@ -7,7 +7,12 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Shake your phone to open the developer menu.</Text>
+
+        <Button
+          backgroundColor='red'
+          large
+          icon={{name: 'squirrel', type: 'octicon', buttonStyle: styles.someButtonStyle }}
+          title='OCTICON' />
       </View>
     );
   }
@@ -18,7 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffff',
     justifyContent: 'center',
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
   },
   item: {
     padding: 10,

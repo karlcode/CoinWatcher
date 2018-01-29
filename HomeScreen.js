@@ -123,7 +123,7 @@ export default class App extends React.Component {
             onEndReachedThreshold={50}
           />
         </List>
-        <Text>Shake your phone to open the developer menu.</Text>
+
       </View>
     );
   }
