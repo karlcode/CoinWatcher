@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
 import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
-import {StackNavigator} from 'react-navigation';
+
 
 
 export default class App extends React.Component {
@@ -53,14 +53,6 @@ export default class App extends React.Component {
     );
   };
 
-  handleLoadMore = () => {
-    this.setState(
-      {
-        page: this.state.page + 1
-      },
-
-    );
-  };
   renderSeparator = () => {
     return (
       <View
@@ -75,12 +67,24 @@ export default class App extends React.Component {
   };
 
   renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme round />;
+    return <SearchBar placeholder="Type Here..." lightTheme showLoading round />;
   };
 
   renderFooter = () => {
     if (!this.state.loading) return null;
-
+  
+  searchFilterFunction = (text) => {
+     
+      const newData = this.arrayholder.filter(function(item){
+          const itemData = item.fruit_name.toUpperCase()
+          const textData = text.toUpperCase()
+          return itemData.indexOf(textData) > -1
+      })
+      this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(newData),
+          text: text
+      })
+  } 
     return (
       <View
         style={{
@@ -89,7 +93,9 @@ export default class App extends React.Component {
           borderColor: "#CED0CE"
         }}
       >
-        <ActivityIndicator animating size="large" />
+        <ActivityIndicator animating size="large" 
+        onChangeText={(text) => this.SearchFilterFunction(text)}
+        />
       </View>
     );
   };
@@ -103,15 +109,17 @@ export default class App extends React.Component {
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <View>
+              <TouchableHighlight activteOpacity='0.1' underlayColor='grey' onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
+                <View>
                 <ListItem
-                  onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}
+                  
                   roundAvatar
                   title={`${item.symbol} ${item.name}`}
                   subtitle={`$${item.price_usd}`}
                   containerStyle={{ borderBottomWidth: 0 }}
                 />
-              </View>
+                </View>
+              </TouchableHighlight>
             )}
             keyExtractor={item => item.name}
             ItemSeparatorComponent={this.renderSeparator}
@@ -119,8 +127,7 @@ export default class App extends React.Component {
             ListFooterComponent={this.renderFooter}
             onRefresh={this.handleRefresh}
             refreshing={this.state.refreshing}
-            onEndReached={this.handleLoadMore}
-            onEndReachedThreshold={50}
+
           />
         </List>
 
@@ -132,7 +139,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffff',
+    backgroundColor: 'blue',
     justifyContent: 'center',
   },
   item: {
