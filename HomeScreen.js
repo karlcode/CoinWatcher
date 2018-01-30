@@ -11,7 +11,6 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
 
-    this.ds = new ListView.DataSource({rowHasChanged: (prevRow, nextRow) => prevRow !== nextRow})
     this.state = {
       loading: false,
       data: [],
@@ -33,8 +32,7 @@ export default class App extends React.Component {
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      this.setState({data: this.ds.cloneWithRows(res), refreshing: false})
-      console.log(this.ds.getRowAndSectionCount())
+      this.setState({data: res, refreshing: false})
     })
     .catch(error => {
       this.setState({error, loading: false});
@@ -74,18 +72,6 @@ export default class App extends React.Component {
   renderFooter = () => {
     if (!this.state.loading) return null;
   
-  searchFilterFunction = (text) => {
-     
-      const newData = this.arrayholder.filter(function(item){
-          const itemData = item.fruit_name.toUpperCase()
-          const textData = text.toUpperCase()
-          return itemData.indexOf(textData) > -1
-      })
-      this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(newData),
-          text: text
-      })
-  } 
     return (
       <View
         style={{
@@ -105,7 +91,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
 
-        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+        
         
           <FlatList
             data={this.state.data}
@@ -130,7 +116,7 @@ export default class App extends React.Component {
             refreshing={this.state.refreshing}
 
           />
-        </List>
+
 
       </View>
     );
@@ -140,7 +126,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     justifyContent: 'center',
   },
   item: {
