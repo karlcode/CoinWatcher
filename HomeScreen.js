@@ -1,21 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, ListView } from 'react-native';
-import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
+import { Button, Header, ListItem, SearchBar, Overlay } from 'react-native-elements';
 
 
 
 export default class App extends React.Component {
-  static navigationOptions= ({ navigation }) => ({
-    title: 'Home'
-  })
+  static navigationOptions = {
+    tabBarLabel: 'Home'
+  };
   constructor(props){
     super(props);
 
     this.state = {
       loading: false,
       data: [],
-      page: 1,
-      seed: 1,
       error: null,
       refreshing: false
     };
@@ -27,7 +25,6 @@ export default class App extends React.Component {
   }
 
   makeRemoteRequest = () => {
-    const {seed, page} = this.state;
     const url = `https://api.coinmarketcap.com/v1/ticker/`;
     fetch(url)
     .then(res => res.json())
@@ -38,12 +35,11 @@ export default class App extends React.Component {
       this.setState({error, loading: false});
     })
   }
+
   handleRefresh = () => {
     console.log("refreshing")
     this.setState(
       {
-        page: 1,
-        seed: this.state.seed + 1,
         refreshing: true
       },
       () => {
@@ -91,12 +87,10 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
 
-        
-        
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
-              <TouchableHighlight activteOpacity='0.1' underlayColor='rgba(0, 0, 0, 1, 0.6)' onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
+              <TouchableHighlight  onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
                 <View>
                 <ListItem
                   

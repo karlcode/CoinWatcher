@@ -4,6 +4,9 @@ import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native
 
 
 export default class App extends React.Component {
+  static navigationOptions = {
+    tabBarLabel: 'Second'
+  };
   render() {
     return (
       <View style={styles.container}>
