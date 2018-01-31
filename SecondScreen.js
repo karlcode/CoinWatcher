@@ -4,9 +4,6 @@ import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native
 
 
 export default class App extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Second'
-  };
   render() {
     return (
       <View style={styles.container}>
@@ -24,7 +21,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'pink',
     justifyContent: 'center',
   },
   item: {

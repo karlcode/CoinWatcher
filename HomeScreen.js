@@ -5,9 +5,7 @@ import { Button, Header, ListItem, SearchBar, Overlay } from 'react-native-eleme
 
 
 export default class App extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Home'
-  };
+  
   constructor(props){
     super(props);
 
@@ -86,7 +84,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
+        <SearchBar placeholder="Type Here..." lightTheme showLoading round />
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
@@ -104,7 +102,7 @@ export default class App extends React.Component {
             )}
             keyExtractor={item => item.name}
             ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader}
+            //ListHeaderComponent={this.renderHeader}
             ListFooterComponent={this.renderFooter}
             onRefresh={this.handleRefresh}
             refreshing={this.state.refreshing}

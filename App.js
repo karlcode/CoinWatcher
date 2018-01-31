@@ -1,27 +1,29 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, Easing, Animated } from 'react-native';
-import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
-import { TabNavigator } from 'react-navigation';
-import HomeScreen from './HomeScreen';
-import SecondScreen from './SecondScreen';
+import { StyleSheet, View, StatusBar, Platform } from 'react-native';
+import { Navigation } from './Navigation';
 
+const App = () => {
+    return (
+      <View style={styles.container}>
+        <View style={styles.statusBar}>
+          <StatusBar
+            backgroundColor={'transparent'}
+            translucent
+          />
+        </View>
+        <Navigation />
+      </View>
+    );
+};
 
-const AppRoot = TabNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-    },
-    SecondScreen: { 
-      screen: SecondScreen,
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
   },
-  {
-    tabBarPosition: 'bottom',
-    animationEnabled: true,
-    tabBarOptions: {
-      activeTintColor: '#e91e63',
-    },
-  }
-);
+  statusBar: {
+    height: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),
+    backgroundColor: 'white',
+  },
+});
 
-export default AppRoot;
+export default App
