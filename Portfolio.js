@@ -8,8 +8,8 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Card
-        title='HELLO WORLD'
-        image={'https://i.ytimg.com/vi/y4Ccm-kUDSM/hqdefault.jpg'}>
+        title='HELLO WORLD'>
+        <Image style={{width: 200, height: 200}} source={{uri: 'https://pbs.twimg.com/profile_images/875443327835025408/ZvmtaSXW_400x400.jpg'}}/>
         <Text style={{marginBottom: 10}}>
             The idea with React Native Elements is more about component structure than actual design.
         </Text>

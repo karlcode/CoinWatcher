@@ -8,9 +8,10 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Button
-          backgroundColor='red'
-          large
-          icon={{name: 'squirrel', type: 'octicon', buttonStyle: styles.someButtonStyle }}/>
+        backgroundColor='#84C24D'
+        large
+        icon={{name: 'done'}}
+        title='Add' />
 
       </View>
     );
@@ -20,7 +21,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
     justifyContent: 'center',
   },
   item: {
