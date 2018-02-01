@@ -4,12 +4,12 @@ import { Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-
 import { TabNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen';
 import SecondScreen from './SecondScreen';
+import HomeNavigation from './HomeNavigation';
 
-
-export const Navigation = TabNavigator(
+const Navigation = TabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: HomeNavigation,
       navigationOptions: {
       tabBarLabel: <Icon
       name='home' />
@@ -40,3 +40,4 @@ export const Navigation = TabNavigator(
   }
 );
 
+export default Navigation
