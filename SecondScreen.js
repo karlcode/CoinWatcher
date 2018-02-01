@@ -5,13 +5,13 @@ import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native
 
 export default class App extends React.Component {
   render() {
-    const {navigation: {state: {params}}} = this.props
     return (
       <View style={styles.container}>
         <Button
           backgroundColor='red'
           large
           icon={{name: 'squirrel', type: 'octicon', buttonStyle: styles.someButtonStyle }}/>
+
       </View>
     );
   }

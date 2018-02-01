@@ -9,17 +9,17 @@ const HomeNavigation = StackNavigator({
   Home: { 
     screen: HomeScreen,
     navigationOptions: {
-      title: 'SearchBarHere',
+      title: 'Ranking',
       headerTitleStyle: {
         alignSelf: 'center',
       }
     },
   },
-  Chat: { 
+  SecondScreen: { 
     screen: SecondScreen, 
-    navigationOptions: {
-      title: 'Wee',
-    },
+    navigationOptions: ({navigation}) => ({
+      title: `${navigation.state.params.name}`,
+    }),
   },
 },
 {

@@ -5,12 +5,13 @@ import Navigation from './Navigation';
 const App = () => {
     return (
       <View style={styles.container}>
-        <View style={styles.statusBar}>
-          <StatusBar
-            backgroundColor={'transparent'}
-            translucent
-          />
-        </View>
+        <StatusBar
+          hidden={false}
+          translucent={true}
+          backgroundColor="rgba(255, 255, 255, 0)"
+          barStyle="light-content"
+          showHideTransition={'fade'}
+        />
         <Navigation />
       </View>
     );

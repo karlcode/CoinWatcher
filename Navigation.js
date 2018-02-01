@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, Ea
 import { Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
 import { TabNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen';
+import Portfolio from './Portfolio';
 import SecondScreen from './SecondScreen';
 import HomeNavigation from './HomeNavigation';
 
@@ -15,8 +16,8 @@ const Navigation = TabNavigator(
       name='home' />
       }
     },
-    SecondScreen: { 
-      screen: SecondScreen,
+    Portfolio: { 
+      screen: Portfolio,
       navigationOptions: {
       tabBarLabel: <Icon
       name='insert-chart' />
