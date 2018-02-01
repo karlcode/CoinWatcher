@@ -84,7 +84,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <SearchBar placeholder="Type Here..." lightTheme showLoading round />
+        <SearchBar containerStyle={{elevation: 5}} style={styles.search} placeholder="Type Here..." lightTheme showLoading round />
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => (
@@ -126,4 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
+  search: {
+    elevation: 4,
+  }
 });
