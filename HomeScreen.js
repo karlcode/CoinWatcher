@@ -52,9 +52,8 @@ export default class App extends React.Component {
       <View
         style={{
           height: 1,
-          width: "86%",
+          width: "100%",
           backgroundColor: "#CED0CE",
-          marginLeft: "14%"
         }}
       />
     );
@@ -82,39 +81,31 @@ export default class App extends React.Component {
     );
   };
 
+  _renderItem = ({ item }) => {
+    return (
+          <ListItem
+            onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.name}))}
+            roundAvatar
+            rightIcon={<Text>{item.percent_change_24h}%(24h)</Text>}
+            title={`${item.symbol} ${item.name}`}
+            subtitle={`$${item.price_usd} `}
+            containerStyle={{ borderBottomWidth: 0 }}
+          />
+    );
+}
   render() {
     return (
       <View style={styles.container}>
           <FlatList
             data={this.state.data}
-            renderItem={({ item }) => (
-              <TouchableHighlight  onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.symbol}))}>
-                <View>
-                <ListItem
-                  
-                  roundAvatar
-                  title={`${item.symbol} ${item.name}`}
-                  subtitle={
-                    <View >
-                      <Text >${item.price_usd}</Text>
-                      <Text >{item.percent_change_1h}%</Text>
-                    </View>
-                  }
-                  containerStyle={{ borderBottomWidth: 0 }}
-                />
-                </View>
-              </TouchableHighlight>
-            )}
+            renderItem={this._renderItem}
             keyExtractor={item => item.name}
             ItemSeparatorComponent={this.renderSeparator}
             //ListHeaderComponent={this.renderHeader}
             ListFooterComponent={this.renderFooter}
             onRefresh={this.handleRefresh}
             refreshing={this.state.refreshing}
-
           />
-
-
       </View>
     );
   }
