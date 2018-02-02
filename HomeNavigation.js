@@ -10,7 +10,7 @@ const HomeNavigation = StackNavigator({
     screen: HomeScreen,
     navigationOptions: {
       title: 'Ranking',
-      headerTitle: <SearchBar lightTheme containerStyle={{width: '100%'}}/>,
+      headerTitle: <SearchBar round lightTheme placeholder='Search coin' containerStyle={{width: '100%'}}/>,
       headerTitleStyle: {
         alignSelf: 'center',
       }

@@ -24,6 +24,7 @@ export default class App extends React.Component {
 
   makeRemoteRequest = () => {
     const url = `https://api.coinmarketcap.com/v1/ticker/`;
+    //const url = `https://min-api.cryptocompare.com/data/`;
     fetch(url)
     .then(res => res.json())
     .then(res => {
