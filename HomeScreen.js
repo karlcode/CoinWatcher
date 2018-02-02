@@ -94,7 +94,12 @@ export default class App extends React.Component {
                   
                   roundAvatar
                   title={`${item.symbol} ${item.name}`}
-                  subtitle={`$${item.price_usd}`}
+                  subtitle={
+                    <View >
+                      <Text >${item.price_usd}</Text>
+                      <Text >{item.percent_change_1h}%</Text>
+                    </View>
+                  }
                   containerStyle={{ borderBottomWidth: 0 }}
                 />
                 </View>

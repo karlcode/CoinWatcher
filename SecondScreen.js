@@ -1,12 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
-import { Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
+import { Button, Header, List, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 
 
 export default class App extends React.Component {
   constructor(props){
     super(props);
-
+    
+    this.state = {
+      usdPrice: '',
+      btcPrice: ''
+    }
   }
   componentDidMount(){
     this.props = {
@@ -14,7 +18,7 @@ export default class App extends React.Component {
       ...this.props.navigation.state.params
       
     }
-    this.grabPriceData()
+    //this.grabPriceData()
   }
   componentWillReceiveProps(nextProps){
     
@@ -23,11 +27,27 @@ export default class App extends React.Component {
     const url = `https://min-api.cryptocompare.com/data/price?fsym=${this.props.name}&tsyms=BTC,USD,EUR`
     fetch(url)
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res =>{
+      console.log(res)
+      this.setState({
+        usdPrice: '$' + res.USD,
+        btcPrice: res.BTC + 'BTC'
+      })}
+    )
   }
   render() {
     return (
       <View style={styles.container}>
+        <Card
+          title='HELLO WORLD'>
+          <Text style={{marginBottom: 10}}>
+              {this.state.usdPrice}
+          </Text>
+          <Text style={{marginBottom: 10}}>
+              {this.state.btcPrice}
+          </Text>
+          
+        </Card>
         <Button
         backgroundColor='#84C24D'
         large
