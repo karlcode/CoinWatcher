@@ -86,8 +86,7 @@ export default class App extends React.Component {
           <ListItem
             onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.name}))}
             roundAvatar
-            rightIcon={<Text>
-              {item.percent_change_24h < 0 ? item.percent_change_24h + '%(24h)' : '+' + item.percent_change_24h + '%(24h)' }</Text>}
+            rightIcon={item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
             title={`${item.symbol} ${item.name}`}
             subtitle={`$${item.price_usd} `}
             containerStyle={{ borderBottomWidth: 0 }}
@@ -125,5 +124,11 @@ const styles = StyleSheet.create({
   },
   search: {
     elevation: 4,
-  }
+  },
+  positive: {
+    color: 'green',
+  },
+  negative: {
+    color: 'red',
+  },
 });
