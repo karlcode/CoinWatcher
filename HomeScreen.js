@@ -22,6 +22,7 @@ export default class App extends React.Component {
     this.state = {
       loading: false,
       data: [],
+      noData: true,
       error: null,
       refreshing: false
     };
@@ -104,13 +105,30 @@ export default class App extends React.Component {
           />
     );
   }
-  _onChangeText = () => {
-    console.log("hji")
+  _onChangeText = (e) => {
+    let text = e.toLowerCase()
+    let list = this.state.data
+    let filteredData = list.filter((item) => {
+      return item.name.toLowerCase().match(text)
+    })
+    if (!text || text === '') {
+      console.log("Nothing inputted")
+    } else if (!Array.isArray(filteredData) && !filteredData.length) {
+      // set no data flag to true so as to render flatlist conditionally
+      this.setState({
+        noData: true
+      })
+    } else if (Array.isArray(filteredData)) {
+      this.setState({
+        noData: false,
+        data: filteredData
+      })
+    }
   }
 
   _setNavigationParams = () => {
     let search = <SearchBar 
-                  onChangeText={this.handleChange} 
+                  onChangeText={this._onChangeText} 
                   round 
                   placeholder='Search coin' 
                   containerStyle={{width: '100%'}}/>
