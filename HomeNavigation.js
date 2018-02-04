@@ -8,13 +8,7 @@ import SecondScreen from './SecondScreen';
 const HomeNavigation = StackNavigator({
   Home: { 
     screen: HomeScreen,
-    navigationOptions: {
-      title: 'Ranking',
-      headerTitle: <SearchBar round lightTheme placeholder='Search coin' containerStyle={{width: '100%'}}/>,
-      headerTitleStyle: {
-        alignSelf: 'center',
-      }
-    },
+    
   },
   SecondScreen: { 
     screen: SecondScreen, 

@@ -1,11 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay } from 'react-native-elements';
-
+import Search from './Search';
 
 
 export default class App extends React.Component {
-  
+  static navigationOptions = ({navigation}) => {
+    const params = navigation.state.params || {};
+    return {
+      title: 'Ranking',
+      headerTitle: params.search,
+      headerTitleStyle: {
+        alignSelf: 'center',
+      }
+    }
+  }
+
   constructor(props){
     super(props);
 
@@ -19,11 +29,12 @@ export default class App extends React.Component {
 
   componentDidMount(){
     this.makeRemoteRequest()
+    this._setNavigationParams()
     console.log(this.state)
   }
 
   makeRemoteRequest = () => {
-    const url = `https://api.coinmarketcap.com/v1/ticker/`;
+    const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
     //const url = `https://min-api.cryptocompare.com/data/`;
     fetch(url)
     .then(res => res.json())
@@ -92,7 +103,22 @@ export default class App extends React.Component {
             containerStyle={{ borderBottomWidth: 0 }}
           />
     );
-}
+  }
+  _onChangeText = () => {
+    console.log("hji")
+  }
+
+  _setNavigationParams = () => {
+    let search = <SearchBar 
+                  onChangeText={this.handleChange} 
+                  round 
+                  placeholder='Search coin' 
+                  containerStyle={{width: '100%'}}/>
+    this.props.navigation.setParams({
+      search
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
