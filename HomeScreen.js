@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
-import { Button, Header, ListItem, SearchBar, Overlay } from 'react-native-elements';
+import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import Search from './Search';
 
 
@@ -22,7 +22,8 @@ export default class App extends React.Component {
     this.state = {
       loading: false,
       data: [],
-      noData: true,
+      renderData: [],
+      noData: false,
       error: null,
       refreshing: false
     };
@@ -40,7 +41,7 @@ export default class App extends React.Component {
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      this.setState({data: res, refreshing: false})
+      this.setState({data: res, renderData: res, refreshing: false})
     })
     .catch(error => {
       this.setState({error, loading: false});
@@ -107,12 +108,15 @@ export default class App extends React.Component {
   }
   _onChangeText = (e) => {
     let text = e.toLowerCase()
-    let list = this.state.data
+    let list = this.state.data;
     let filteredData = list.filter((item) => {
       return item.name.toLowerCase().match(text)
     })
     if (!text || text === '') {
-      console.log("Nothing inputted")
+      this.setState({
+        noData: false,
+        renderData: list
+      })
     } else if (!Array.isArray(filteredData) && !filteredData.length) {
       // set no data flag to true so as to render flatlist conditionally
       this.setState({
@@ -121,11 +125,10 @@ export default class App extends React.Component {
     } else if (Array.isArray(filteredData)) {
       this.setState({
         noData: false,
-        data: filteredData
+        renderData: filteredData
       })
     }
   }
-
   _setNavigationParams = () => {
     let search = <SearchBar 
                   onChangeText={this._onChangeText} 
@@ -139,17 +142,17 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
           <FlatList
-            data={this.state.data}
-            renderItem={this._renderItem}
-            keyExtractor={item => item.name}
-            ItemSeparatorComponent={this.renderSeparator}
-            //ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={this.renderFooter}
-            onRefresh={this.handleRefresh}
-            refreshing={this.state.refreshing}
-          />
+          data={this.state.renderData}
+          renderItem={this._renderItem}
+          keyExtractor={item => item.name}
+          ItemSeparatorComponent={this.renderSeparator}
+          //ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFooter}
+          onRefresh={this.handleRefresh}
+          refreshing={this.state.refreshing}
+        /> 
       </View>
     );
   }
