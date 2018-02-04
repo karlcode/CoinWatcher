@@ -123,15 +123,25 @@ export default class App extends React.Component {
         noData: true
       })
     } else if (Array.isArray(filteredData)) {
+      //scroll to top method
+      this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
       this.setState({
         noData: false,
         renderData: filteredData
       })
     }
   }
+  _onClearText(){
+    let list = this.state.data;
+    this.setState({
+      noData: false,
+      renderData: list
+    })
+  }
   _setNavigationParams = () => {
     let search = <SearchBar 
                   onChangeText={this._onChangeText} 
+                  onClearText={this._onClearText}
                   round 
                   placeholder='Search coin' 
                   containerStyle={{width: '100%'}}/>
@@ -144,6 +154,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container} >
           <FlatList
+          ref="listRef"
           data={this.state.renderData}
           renderItem={this._renderItem}
           keyExtractor={item => item.name}
