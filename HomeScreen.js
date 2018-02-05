@@ -32,7 +32,6 @@ export default class App extends React.Component {
   componentDidMount(){
     this.makeRemoteRequest()
     this._setNavigationParams()
-    console.log(this.state)
   }
 
   makeRemoteRequest = () => {
@@ -97,7 +96,7 @@ export default class App extends React.Component {
   _renderItem = ({ item }) => {
     return (
           <ListItem
-            onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.name}))}
+            onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.name, symbol: item.symbol}))}
             roundAvatar
             rightIcon={item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
             title={`${item.symbol} ${item.name}`}
@@ -156,6 +155,9 @@ export default class App extends React.Component {
           <FlatList
           ref="listRef"
           data={this.state.renderData}
+          getItemLayout={(data, index) => (
+            {length: 100, offset: 100 * index, index}
+          )}
           renderItem={this._renderItem}
           keyExtractor={item => item.name}
           ItemSeparatorComponent={this.renderSeparator}
