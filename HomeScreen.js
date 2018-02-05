@@ -186,9 +186,9 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   positive: {
-    color: 'green',
+    color: '#6AE368',
   },
   negative: {
-    color: 'red',
+    color: '#FF0000',
   },
 });

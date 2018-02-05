@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
-import { Card, Button, Header, List, ListItem, SearchBar, Overlay } from 'react-native-elements';
+import { Card, Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
 
 
 export default class App extends React.Component {
@@ -8,16 +8,16 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Card
-        title='HELLO WORLD'>
-        <Image style={{width: 200, height: 200}} source={{uri: 'https://pbs.twimg.com/profile_images/875443327835025408/ZvmtaSXW_400x400.jpg'}}/>
+        title='No Coins Added Yet'>
+        <Icon
+            name='star'
+            type='evilicon'
+            color='#517fa4'
+            size={200}
+            />
         <Text style={{marginBottom: 10}}>
-            The idea with React Native Elements is more about component structure than actual design.
+            If none, render a card saying nothing here with an ANIMATED SVG; else render Flatlist of items
         </Text>
-        <Button
-            icon={{name: 'code'}}
-            backgroundColor='#03A9F4'
-            buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-            title='VIEW NOW' />
         </Card>
       </View>
     );
