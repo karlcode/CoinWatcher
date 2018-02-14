@@ -50,6 +50,7 @@ export default class App extends React.Component {
           
         </Card>
         <Button
+        onPress={()=> Alert.alert('Send props to Portfolio.js i.e map out list of new items. Change this button to greyed out') }
         backgroundColor='#84C24D'
         large
         icon={{name: 'done'}}
