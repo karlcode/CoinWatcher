@@ -35,6 +35,7 @@ export default class App extends React.Component {
   }
 
   makeRemoteRequest = () => {
+    //const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
     const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
     //const url = `https://min-api.cryptocompare.com/data/`;
     fetch(url)
@@ -96,7 +97,7 @@ export default class App extends React.Component {
   _renderItem = ({ item }) => {
     return (
           <ListItem
-            onPress={() => this.props.navigation.navigate('SecondScreen', ({name: item.name, symbol: item.symbol}))}
+            onPress={() => this.props.navigation.navigate('SecondScreen', ({...item}))}
             roundAvatar
             rightIcon={item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
             title={`${item.symbol} ${item.name}`}
