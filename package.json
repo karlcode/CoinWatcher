@@ -5,7 +5,15 @@
   "devDependencies": {
     "react-native-scripts": "1.9.0",
     "jest-expo": "23.0.0",
-    "react-test-renderer": "16.0.0"
+    "react-test-renderer": "16.0.0",
+    "@storybook/react-native": "^3.4.1",
+    "@storybook/addon-actions": "^3.4.1",
+    "@storybook/addon-links": "^3.4.1",
+    "@storybook/addons": "^3.4.1",
+    "babel-core": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "react-dom": "16.0.0",
+    "prop-types": "^15.6.1"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
@@ -13,7 +21,8 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js --watch"
+    "test": "node node_modules/jest/bin/jest.js --watch",
+    "storybook": "storybook start -p 7007"
   },
   "jest": {
     "preset": "jest-expo"

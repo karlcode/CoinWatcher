@@ -9,27 +9,36 @@ export default class App extends React.Component {
     console.log(props);
     
   }
-  componentDidMount(){
-    this.props = {
-      ...this.props,
-      ...this.props.navigation.state.params
-      
-    }
-  }
-
   render() {
+    const { params } = this.props.navigation.state;
     return (
       <View style={styles.container}>
-        <Card
-          title={this.props.symbol}>
-          <Text style={{marginBottom: 10}}>
-              
+          <Text style={{fontSize: 30}}>
+              {params.name} 
+          </Text>
+          <Text style={{fontSize: 30}}>
+              ${params.price_usd} USD 
+          </Text>
+          <Text style={{fontSize: 30}}>
+              {params.price_btc} BTC
           </Text>
           <Text style={{marginBottom: 10}}>
-              
+              Rank:#{params.rank} //put this at top corner or sth
           </Text>
-          
-        </Card>
+
+          <Text style={{marginBottom: 10}}>
+              {params.percent_change_1h}%(1h)
+          </Text>
+          <Text style={{marginBottom: 10}}>
+              {params.percent_change_24h}%(24h)
+          </Text>
+          <Text style={{marginBottom: 10}}>
+              {params.percent_change_7d}%(7d)
+          </Text>
+
+        <Text style={{marginBottom: 10}}>
+              Graph here or something with market cap{params.market_cap_usd} USD
+          </Text>
         <Button
         onPress={()=> Alert.alert('Send props to Portfolio.js i.e map out list of new items. Change this button to greyed out') }
         backgroundColor='#84C24D'
