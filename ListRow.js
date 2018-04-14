@@ -15,19 +15,44 @@ export default class ListRow extends React.Component {
             <ListItem
             onPress={() => navigate('SecondScreen', ({...item}))}
             roundAvatar
-            leftIcon={<Button style={styles.symbol} title={item.symbol}/>}
-            rightIcon={item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
-            title={<Text style={styles.title}>{item.name}</Text>}
-            subtitle={`$${item.price_usd} `}
+            rightIcon={<View style={styles.right}>
+                        <Text style={styles.price}> ${item.price_usd}</Text>
+                        {item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
+                        </View>}
+            title={<View style={styles.left}> 
+                        <Text style={styles.title}>{item.name}</Text>
+                        <Text >{item.symbol}</Text>
+                        </View>}
             containerStyle={{ borderBottomWidth: 0 }}
           />
         )
     }
 }
-
 const styles = StyleSheet.create({
-  container: {
+  left: {
     flex: 1,
+    alignItems: 'flex-start', 
+  },
+  right: {
+    flex: 1,
+    alignItems: 'flex-end', 
+  },
+  symbol: {
+    color: 'red',
+    borderRadius: 20,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  price: {
+    fontSize: 20
+  },
+  positive: {
+    color: 'green',
+  },
+  negative: {
+    color: '#FF0000',
   },
 });
 

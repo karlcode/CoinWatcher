@@ -178,20 +178,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
-  symbol: {
-    color: 'red',
-    borderRadius: 20,
-  },
-  title: {
-    fontWeight: 'bold',
-  },
+  
   search: {
     elevation: 4,
   },
-  positive: {
-    color: 'green',
-  },
-  negative: {
-    color: '#FF0000',
-  },
+  
 });
