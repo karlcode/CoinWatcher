@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import Search from './Search';
+import CryptoIcon from 'react-native-crypto-icons';
+import ListRow from './ListRow';
 
 
 export default class App extends React.Component {
@@ -96,14 +98,7 @@ export default class App extends React.Component {
 
   _renderItem = ({ item }) => {
     return (
-          <ListItem
-            onPress={() => this.props.navigation.navigate('SecondScreen', ({...item}))}
-            roundAvatar
-            rightIcon={item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
-            title={`${item.symbol} ${item.name}`}
-            subtitle={`$${item.price_usd} `}
-            containerStyle={{ borderBottomWidth: 0 }}
-          />
+      <ListRow item={item} navigation={this.props.navigation} />
     );
   }
   _onChangeText = (e) => {
@@ -182,6 +177,13 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
+  },
+  symbol: {
+    color: 'red',
+    borderRadius: 20,
+  },
+  title: {
+    fontWeight: 'bold',
   },
   search: {
     elevation: 4,

@@ -13,14 +13,14 @@ export default class App extends React.Component {
     const { params } = this.props.navigation.state;
     return (
       <View style={styles.container}>
-          <Text style={{fontSize: 30}}>
+          <Text style={styles.title}>
               {params.name} 
           </Text>
           <Text style={{fontSize: 30}}>
               ${params.price_usd} USD 
           </Text>
           <Text style={{fontSize: 30}}>
-              {params.price_btc} BTC
+              ฿{params.price_btc} BTC
           </Text>
           <Text style={{marginBottom: 10}}>
               Rank:#{params.rank} //put this at top corner or sth
@@ -39,6 +39,7 @@ export default class App extends React.Component {
         <Text style={{marginBottom: 10}}>
               Graph here or something with market cap{params.market_cap_usd} USD
           </Text>
+          
         <Button
         onPress={()=> Alert.alert('Send props to Portfolio.js i.e map out list of new items. Change this button to greyed out') }
         backgroundColor='#84C24D'
@@ -52,10 +53,14 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',  
+  },
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
+    margin: 20
+
   },
   item: {
     padding: 10,
