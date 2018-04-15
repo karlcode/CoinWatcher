@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, VirtualizedList } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import Search from './Search';
 import CryptoIcon from 'react-native-crypto-icons';
@@ -74,37 +74,14 @@ export default class App extends React.Component {
     );
   };
 
-  renderHeader = () => {
-    return <SearchBar placeholder="Type Here..." lightTheme showLoading round />;
-  };
-
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-  
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#CED0CE"
-        }}
-      >
-        <ActivityIndicator animating size="large" 
-        onChangeText={(text) => this.SearchFilterFunction(text)}
-        />
-      </View>
-    );
-  };
-
   _renderItem = ({ item }) => {
     return (
-      <ListRow item={item} navigation={this.props.navigation} />
+      <ListRow item={item} navigation={this.props.navigation} /> 
     );
   }
   _onChangeText = (e) => {
     let text = e.toLowerCase()
-    let list = this.state.data;
-    let filteredData = list.filter((item) => {
+    let filteredData = this.state.data.filter((item) => {
       return item.name.toLowerCase().match(text)
     })
     if (!text || text === '') {
@@ -117,7 +94,7 @@ export default class App extends React.Component {
       this.setState({
         noData: true
       })
-    } else if (Array.isArray(filteredData)) {
+    } else if (Array.isArray(filteredData)) { //theres actually an array
       //scroll to top method
       this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
       this.setState({
@@ -135,11 +112,13 @@ export default class App extends React.Component {
   }
   _setNavigationParams = () => {
     let search = <SearchBar 
+                  lightTheme
                   onChangeText={this._onChangeText} 
                   onClearText={this._onClearText}
-                  round 
                   placeholder='Search coin' 
-                  containerStyle={{width: '100%'}}/>
+                  clearIcon={{ type: 'font-awesome', name: 'search' }}
+                  containerStyle={styles.searchBar}
+                  inputStyle={{fontSize: 20}}/>
     this.props.navigation.setParams({
       search
     })
@@ -147,22 +126,23 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.container} >
+      <View style={styles.container}>
           <FlatList
           ref="listRef"
           data={this.state.renderData}
-          getItemLayout={(data, index) => (
-            {length: 100, offset: 100 * index, index}
-          )}
+          //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of everything since it dynamically resized each item
           renderItem={this._renderItem}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.id}
           ItemSeparatorComponent={this.renderSeparator}
           //ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
+          //ListFooterComponent={this.renderFooter}
           onRefresh={this.handleRefresh}
+          removeClippedSubviews={false}
           refreshing={this.state.refreshing}
+          initialNumToRender={50}
+          maxToRenderPerBatch={50}
         /> 
-      </View>
+     </View>
     );
   }
 }
@@ -182,5 +162,7 @@ const styles = StyleSheet.create({
   search: {
     elevation: 4,
   },
-  
+  searchBar: {
+    width: '100%'
+  }
 });

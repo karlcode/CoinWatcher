@@ -2,31 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 
-export default class ListRow extends React.Component {
-    constructor(props){
-        super(props);
-
-      }
-
-    render() {
-        const { navigate } = this.props.navigation;
-        const { item } = this.props;
-        return(
-            <ListItem
-            onPress={() => navigate('SecondScreen', ({...item}))}
-            roundAvatar
-            rightIcon={<View style={styles.right}>
-                        <Text style={styles.price}> ${item.price_usd}</Text>
-                        {item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
-                        </View>}
-            title={<View style={styles.left}> 
-                        <Text style={styles.title}>{item.name}</Text>
-                        <Text >{item.symbol}</Text>
-                        </View>}
-            containerStyle={{ borderBottomWidth: 0 }}
-          />
-        )
-    }
+const ListRow = (props) => {
+    const { navigate } = props.navigation;
+    const { item } = props;
+    return(
+        <ListItem
+        onPress={() => navigate('SecondScreen', ({...item}))}
+        roundAvatar
+        rightIcon={<View style={styles.right}>
+                    {item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
+                    <Text> ${item.price_usd}</Text>
+                    </View>}
+        title={<View style={styles.left}> 
+                    <Text style={styles.title}>{item.name}</Text>
+                    <Text >{item.symbol}</Text>
+                    </View>}
+        containerStyle={{ borderBottomWidth: 0 }}
+        />
+    )
 }
 const styles = StyleSheet.create({
   left: {
@@ -45,14 +38,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20
   },
-  price: {
-    fontSize: 20
-  },
   positive: {
-    color: 'green',
+    color: '#3CBD61',
+    fontSize: 18,
   },
   negative: {
-    color: '#FF0000',
+    color: '#FF2100',
+    fontSize: 18,
   },
 });
 
+export default ListRow
