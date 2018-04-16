@@ -8,17 +8,16 @@ import ListRow from './ListRow';
 import { LargeList } from "react-native-largelist";
 
 export default class App extends React.Component {
-  static navigationOptions = ({navigation}) => {
-    const params = navigation.state.params || {};
-    return {
-      title: 'Ranking',
-      headerTitle: params.search,
-      headerTitleStyle: {
-        alignSelf: 'center',
+    static navigationOptions = ({navigation}) => {
+        const params = navigation.state.params || {};
+        return {
+          title: 'Ranking',
+          headerTitle: params.search,
+          headerTitleStyle: {
+            alignSelf: 'center',
+          }
+        }
       }
-    }
-  }
-
   constructor(props){
     super(props);
 
@@ -30,26 +29,6 @@ export default class App extends React.Component {
       refreshing: false,
       searchTerm: ''
     };
-  }
-
-  componentDidMount(){
-    this.makeRemoteRequest()
-    this._setNavigationParams()
-    console.log("called again");
-  }
-
-  makeRemoteRequest = () => {
-    //const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
-    const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
-    //const url = `https://min-api.cryptocompare.com/data/`;
-    fetch(url)
-    .then(res => res.json())
-    .then(res => {
-      this.setState({renderData: res, refreshing: false})
-    })
-    .catch(error => {
-      this.setState({error, loading: false});
-    })
   }
 
   handleRefresh = () => {
@@ -139,7 +118,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const filtered = this.state.renderData.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
+    const filtered = this.props.data.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
     console.log("Rendered again");
     return (
       <View style={styles.container}>

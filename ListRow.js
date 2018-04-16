@@ -1,13 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableOpacity } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 
-const ListRow = (props) => {
-    const { navigate } = props.navigation;
-    const { item } = props;
+
+export default class ListRow extends React.PureComponent {
+  render(){
+    const { navigate } = this.props.navigation;
+    const { item, filtered } = this.props;
     return(
+      <TouchableOpacity 
+          onPress={() => navigate('SecondScreen', ({...item}))}>
         <ListItem
-        onPress={() => navigate('SecondScreen', ({...item}))}
+        //onPress={() => navigate('SecondScreen', ({...item}))}
         roundAvatar
         rightIcon={<View style={styles.right}>
                     {item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
@@ -19,7 +23,9 @@ const ListRow = (props) => {
                     </View>}
         containerStyle={{ borderBottomWidth: 0 }}
         />
+    </TouchableOpacity>
     )
+  }
 }
 const styles = StyleSheet.create({
   left: {
@@ -48,4 +54,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListRow
