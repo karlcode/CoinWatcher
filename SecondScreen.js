@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
-import { Button, Header, List, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
-
+import { Button, Header, List, ListItem, SearchBar, Overlay, Card, Icon } from 'react-native-elements';
+import ActionButton from 'react-native-circular-action-menu';
 
 export default class App extends React.Component {
   constructor(props){
@@ -39,14 +39,18 @@ export default class App extends React.Component {
         <Text style={{marginBottom: 10}}>
               Graph here or something with market cap{params.market_cap_usd} USD
           </Text>
-          
-        <Button
-        onPress={()=> Alert.alert('Send props to Portfolio.js i.e map out list of new items. Change this button to greyed out') }
-        backgroundColor='#84C24D'
-        large
-        icon={{name: 'done'}}
-        title='Add' />
-
+      
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+            <Icon name="g-translate" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+            <Icon name="g-translate" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="g-translate" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       </View>
     );
   }
@@ -59,8 +63,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    margin: 20
-
+    margin: 30,
+    top: 40
   },
-  
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
 });
