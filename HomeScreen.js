@@ -7,7 +7,6 @@ import CryptoIcon from 'react-native-crypto-icons';
 import ListRow from './ListRow';
 import { LargeList } from "react-native-largelist";
 import {  LinearGradient } from 'expo';
-
 export default class App extends React.Component {
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params || {};
@@ -69,7 +68,7 @@ export default class App extends React.Component {
     return (
       <View
         style={{
-          height: 0.5,
+          height: 0,
           width: "100%",
           backgroundColor: "rgba(0, 0, 0, 0.1)",
         }}
@@ -162,14 +161,12 @@ export default class App extends React.Component {
           initialNumToRender={10}
           maxToRenderPerBatch={50}
         /> 
-        <View style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 100}}>
+        <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
           <LinearGradient style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 100,
-          }} colors={[ 'rgba(255,255,255,0)', 'rgba(255,255,255,1)' ] } />
+            
+            height: 300,
+          }} 
+          colors={[ 'rgba(255,255,255,0)', 'rgba(255,255,255,1)' ] } />
         </View>
      </View>
     );
@@ -194,7 +191,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,1)',
     justifyContent: 'center',
   },
   item: {

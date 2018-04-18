@@ -37,14 +37,14 @@ const Navigation = TabNavigator(
     animationEnabled: true,
     swipeEnabled: true,
     tabBarComponent: TabBarBottom,
-
+    removeClippedSubviews: false,
     tabBarOptions: {
       showLabel: false,
       activeTintColor: 'tomato',                               
       inactiveTintColor: 'gray',
       style: {
         elevation: 0,
-        backgroundColor: 'white',
+        backgroundColor: 'rgba(255,255,255,1)',
         borderTopColor: "transparent"
       },
     },
