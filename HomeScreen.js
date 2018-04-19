@@ -125,7 +125,6 @@ export default class App extends React.Component {
 
   _setNavigationParams = () => {
     let search = <SearchBar 
-                  lightTheme
                   round
                   onChangeText={this._onChangeText}
                   onClearText={this._onClearText}
