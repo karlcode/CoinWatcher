@@ -39,6 +39,7 @@ export default class App extends React.Component {
   }
 
   makeRemoteRequest = () => {
+    console.log("FETCHING DATA");
     //const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
     const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
     //const url = `https://min-api.cryptocompare.com/data/`;
@@ -155,10 +156,10 @@ export default class App extends React.Component {
           //ListHeaderComponent={this.renderHeader}
           //ListFooterComponent={this.renderFooter}
           onRefresh={this.handleRefresh}
-          removeClippedSubviews={false}
+          removeClippedSubviews={true}
           refreshing={this.state.refreshing}
           initialNumToRender={10}
-          maxToRenderPerBatch={50}
+          maxToRenderPerBatch={20}
         /> 
         <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
           <LinearGradient style={{
