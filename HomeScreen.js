@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 import Search from './Search';
@@ -23,7 +23,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      loading: false,
+      loading: true,
       renderData: [],
       noData: false,
       error: null,
@@ -46,7 +46,7 @@ export default class App extends React.Component {
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      this.setState({renderData: res, refreshing: false})
+      this.setState({renderData: res, refreshing: false, loading: false})
     })
     .catch(error => {
       this.setState({error, loading: false});
@@ -86,7 +86,13 @@ export default class App extends React.Component {
       </TouchableWithoutFeedback>
     );
   }
-
+  noItemDisplay = () => {
+    return (
+      <View style={[styles.container, styles.horizontal]}>
+        <Text>Could'nt find any :(</Text>
+      </View>
+    );
+  }
   /*
   _onChangeText = (e) => {
     let text = e.toLowerCase()
@@ -143,28 +149,33 @@ export default class App extends React.Component {
     console.log("Rendered again");
     return (
       <View style={styles.container}>
-      
-          <FlatList
-          ref="listRef"
-          data={filtered.filter(item => item)}
-          //data={this.state.renderData}
-          //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
-          renderItem={this._renderItem}
-          keyExtractor={(item, index) => item.id}
-          //extraData={filtered.filter(item => item)}
-          ItemSeparatorComponent={this.renderSeparator}
-          //ListHeaderComponent={this.renderHeader}
-          //ListFooterComponent={this.renderFooter}
-          onRefresh={this.handleRefresh}
-          removeClippedSubviews={true}
-          refreshing={this.state.refreshing}
-          initialNumToRender={10}
-          maxToRenderPerBatch={20}
-        /> 
+          {this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : 
+            <FlatList
+            ref="listRef"
+            data={filtered.filter(item => item)}
+            //data={this.state.renderData}
+            //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
+            renderItem={this._renderItem}
+            keyExtractor={(item, index) => item.id}
+            ListEmptyComponent={this.noItemDisplay}
+            //extraData={filtered.filter(item => item)}
+            ItemSeparatorComponent={this.renderSeparator}
+            //ListHeaderComponent={this.renderHeader}
+            //ListFooterComponent={this.renderFooter}
+
+            onRefresh={this.handleRefresh}
+            removeClippedSubviews={true}
+            refreshing={this.state.refreshing}
+            initialNumToRender={10}
+            maxToRenderPerBatch={10}
+            windowSize={100}
+          /> 
+          }
+          
         <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
           <LinearGradient style={{
             
-            height: 300,
+            height: 250,
           }} 
           colors={[ 'rgba(255,255,255,0)', 'rgba(255,255,255,1)' ] } />
         </View>
@@ -193,6 +204,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(255,255,255,1)',
     justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
   },
   item: {
     padding: 10,
