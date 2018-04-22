@@ -7,7 +7,7 @@ import CryptoIcon from 'react-native-crypto-icons';
 import ListRow from './ListRow';
 import { LargeList } from "react-native-largelist";
 import {  LinearGradient } from 'expo';
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params || {};
     return {
@@ -24,7 +24,7 @@ export default class App extends React.Component {
 
     this.state = {
       loading: true,
-      renderData: [],
+      data: [],
       noData: false,
       error: null,
       refreshing: false,
@@ -46,7 +46,7 @@ export default class App extends React.Component {
     fetch(url)
     .then(res => res.json())
     .then(res => {
-      this.setState({renderData: res, refreshing: false, loading: false})
+      this.setState({data: res, refreshing: false, loading: false})
     })
     .catch(error => {
       this.setState({error, loading: false});
@@ -79,52 +79,19 @@ export default class App extends React.Component {
 
   _renderItem = ({item}) => {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View>
+
       <ListRow item={item} navigation={this.props.navigation}/> 
-      </View>
-      </TouchableWithoutFeedback>
+
     );
   }
   noItemDisplay = () => {
     return (
       <View style={[styles.container, styles.horizontal]}>
-        <Text>Could'nt find any :(</Text>
+        <Text>No Results Returned</Text>
       </View>
     );
   }
-  /*
-  _onChangeText = (e) => {
-    let text = e.toLowerCase()
-    let filteredData = this.state.renderData.filter((item) => {
-      return item.name.toLowerCase().match(text)
-    })
-    if (!text || text === '') {
-      this.setState({
-        noData: false,
-        renderData: this.state.data
-      })
-    } else if (!Array.isArray(filteredData) && !filteredData.length) {
-      // set no data flag to true so as to render flatlist conditionally
-      this.setState({
-        noData: true
-      })
-    } else if (Array.isArray(filteredData)) { //theres actually an array
-      //scroll to top method
-      this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
-      this.setState({
-        noData: false,
-        renderData: filteredData,
-      })
-    }
-  }
-  _onClearText(){
-    //let list = this.state.data;
-    this.setState({
-      noData: false,
-      renderData: this.state.data
-    })
-  }*/
+
   _onChangeText = (e) => {
     this.setState({ searchTerm: e })
     this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
@@ -145,14 +112,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    const filtered = this.state.renderData.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
+    const filtered = this.state.data.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
     console.log("Rendered again");
     return (
       <View style={styles.container}>
           {this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : 
             <FlatList
             ref="listRef"
-            data={filtered.filter(item => item)}
+            data={filtered.map(item => item)}
             //data={this.state.renderData}
             //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
             renderItem={this._renderItem}
@@ -162,13 +129,11 @@ export default class App extends React.Component {
             ItemSeparatorComponent={this.renderSeparator}
             //ListHeaderComponent={this.renderHeader}
             //ListFooterComponent={this.renderFooter}
-
             onRefresh={this.handleRefresh}
             removeClippedSubviews={true}
             refreshing={this.state.refreshing}
             initialNumToRender={10}
             maxToRenderPerBatch={10}
-            windowSize={100}
           /> 
           }
           
@@ -184,21 +149,24 @@ export default class App extends React.Component {
   }
 }
 /*<FlatList
-          ref="listRef"
-          data={filtered.filter(item => item)}
-          //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
-          renderItem={this._renderItem}
-          keyExtractor={item => item.id}
-          extraData={this.state}
-          ItemSeparatorComponent={this.renderSeparator}
-          //ListHeaderComponent={this.renderHeader}
-          //ListFooterComponent={this.renderFooter}
-          onRefresh={this.handleRefresh}
-          removeClippedSubviews={false}
-          refreshing={this.state.refreshing}
-          initialNumToRender={50}
-          maxToRenderPerBatch={50}
-        /> */
+            ref="listRef"
+            data={filtered.map(item => item)}
+            //data={this.state.renderData}
+            //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
+            renderItem={this._renderItem}
+            keyExtractor={(item, index) => item.id}
+            ListEmptyComponent={this.noItemDisplay}
+            //extraData={filtered.filter(item => item)}
+            ItemSeparatorComponent={this.renderSeparator}
+            //ListHeaderComponent={this.renderHeader}
+            //ListFooterComponent={this.renderFooter}
+
+            onRefresh={this.handleRefresh}
+            removeClippedSubviews={true}
+            refreshing={this.state.refreshing}
+            initialNumToRender={10}
+            maxToRenderPerBatch={10}
+          />  */
 const styles = StyleSheet.create({
   container: {
     flex: 1,

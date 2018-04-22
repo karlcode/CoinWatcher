@@ -1,8 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Platform } from 'react-native';
 import Navigation from './Navigation';
+import { Font } from 'expo';
+export default class App extends React.Component {
 
-const App = () => {
+  componentDidMount() {
+    Font.loadAsync({
+      'IBMPlexSans': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
+    });
+  }
+  render(){
     return (
       <View style={styles.container}>
         <StatusBar
@@ -15,16 +22,16 @@ const App = () => {
         <Navigation />
       </View>
     );
-};
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    fontFamily: 'IBMPlexSans',
   },
   /*statusBar: {
     height: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),
     backgroundColor: 'white',
   },*/
 });
-
-export default App

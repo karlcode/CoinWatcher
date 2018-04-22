@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   negative: {
-    color: '#FF2100',
+    color: '#FF5E5E',
     fontSize: 18,
   },
 });

@@ -32,6 +32,7 @@
     "@atlaskit/icon": "^11.0.0",
     "@atlaskit/theme": "^3.0.0",
     "expo": "^23.0.4",
+    "native-base": "^2.4.2",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-circular-action-menu": "^0.5.0",
