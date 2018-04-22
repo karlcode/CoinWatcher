@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableOpacity } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class ListRow extends React.PureComponent {
   render(){
@@ -14,7 +14,9 @@ export default class ListRow extends React.PureComponent {
         //onPress={() => navigate('SecondScreen', ({...item}))}
         roundAvatar
         rightIcon={<View style={styles.right}>
-                    {item.percent_change_24h < 0 ? <Text style={styles.negative}>{item.percent_change_24h}%(24h)</Text> : <Text style={styles.positive}> +{item.percent_change_24h}%(24h)</Text> }
+                    {item.percent_change_24h < 0 ? 
+                    <Text style={styles.negative}>{item.percent_change_24h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                    <Text style={styles.positive}> {item.percent_change_24h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
                     <Text> ${item.price_usd}</Text>
                     </View>}
         title={<View style={styles.left}> 
