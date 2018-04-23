@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Platform } from 'react-native';
 import Navigation from './Navigation';
-import { Font } from 'expo';
+import { Font, Constants } from 'expo';
 export default class App extends React.Component {
   state = {
     fontLoaded: false,
@@ -16,13 +16,7 @@ export default class App extends React.Component {
   render(){
     return (
       <View style={styles.container}>
-        <StatusBar
-          hidden={false}
-          translucent={true}
-          backgroundColor="rgba(255, 255, 255, 0)"
-          barStyle="light-content"
-          
-        />
+        <View style={styles.statusBar} />
         <Navigation />
       </View>
     );
@@ -32,6 +26,10 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  statusBar: {
+    backgroundColor: "#3B4044",
+    height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
   },
   /*statusBar: {
     height: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),

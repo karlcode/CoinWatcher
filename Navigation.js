@@ -41,7 +41,7 @@ const Navigation = TabNavigator(
     tabBarOptions: {
       showLabel: false,
       activeTintColor: 'tomato',                               
-      inactiveTintColor: 'gray',
+      inactiveTintColor: 'white',
       style: {
         elevation: 0,
         backgroundColor: 'rgb(20,20,20)',
