@@ -44,7 +44,7 @@ const Navigation = TabNavigator(
       inactiveTintColor: 'gray',
       style: {
         elevation: 0,
-        backgroundColor: 'rgba(255,255,255,1)',
+        backgroundColor: 'rgb(20,20,20)',
         borderTopColor: "transparent"
       },
     },

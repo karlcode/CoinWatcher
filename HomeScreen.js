@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
+import { ActivityIndicator, StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
+import { Button, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
+import {  Header, } from 'native-base';
 import SearchInput, { createFilter } from 'react-native-search-filter';
-import Search from './Search';
 import CryptoIcon from 'react-native-crypto-icons';
 import ListRow from './ListRow';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LargeList } from "react-native-largelist";
 import {  LinearGradient } from 'expo';
 export default class App extends React.PureComponent {
@@ -13,9 +14,7 @@ export default class App extends React.PureComponent {
     return {
       title: 'Home',
       headerTitle: params.search,
-      headerTitleStyle: {
-        alignSelf: 'center',
-      }
+      
     }
   }
 
@@ -69,9 +68,9 @@ export default class App extends React.PureComponent {
     return (
       <View
         style={{
-          height: 0,
+          height: 1,
           width: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.1)",
+          backgroundColor: "rgba(255,255,255, 0.1)",
         }}
       />
     );
@@ -98,14 +97,17 @@ export default class App extends React.PureComponent {
   }
 
   _setNavigationParams = () => {
-    let search = <SearchBar 
-                  round
-                  onChangeText={this._onChangeText}
-                  onClearText={this._onClearText}
-                  placeholder='Search coin' 
-                  clearIcon={{ type: 'font-awesome', name: 'clear' }}
-                  containerStyle={styles.searchBar}
-                  inputStyle={{fontSize: 20}}/>
+    let search = 
+                    <SearchBar 
+                            round
+                            onChangeText={this._onChangeText}
+                            onClearText={this._onClearText}
+                            placeholder='Search coin' 
+                            clearIcon={{ type: 'font-awesome', name: 'cancel', style: {fontSize: 20} }}
+                            containerStyle={styles.searchBar}
+                            //inputStyle={{fontSize: 20, backgroundColor: '#E9EAE8', width: '85%'}}
+                            />
+               
     this.props.navigation.setParams({
       search
     })
@@ -116,7 +118,7 @@ export default class App extends React.PureComponent {
     console.log("Rendered again");
     return (
       <View style={styles.container}>
-          {this.state.loading ? <ActivityIndicator size="large" color="#0000ff" /> : 
+          {this.state.loading ? <ActivityIndicator size="large" color="white" /> : 
             <FlatList
             ref="listRef"
             data={filtered.map(item => item)}
@@ -142,7 +144,7 @@ export default class App extends React.PureComponent {
             
             height: 250,
           }} 
-          colors={[ 'rgba(255,255,255,0)', 'rgba(255,255,255,1)' ] } />
+          colors={[ 'rgba(0,0,0,0)', 'rgb(20,20,20)' ] } />
         </View>
      </View>
     );
@@ -170,7 +172,7 @@ export default class App extends React.PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(255,255,255,1)',
+    backgroundColor: 'rgba(0,0,0,1)',
     justifyContent: 'center',
   },
   horizontal: {
@@ -187,6 +189,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   searchBar: {
-    width: '100%'
+    width: '100%',
   }
 });

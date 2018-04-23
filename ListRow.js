@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, To
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default class ListRow extends React.PureComponent {
+export default class ListRow extends React.PureComponent { 
   render(){
     const { navigate } = this.props.navigation;
     const { item, filtered } = this.props;
@@ -11,19 +11,32 @@ export default class ListRow extends React.PureComponent {
       <TouchableOpacity 
           onPress={() => navigate('SecondScreen', ({...item}))}>
         <ListItem
+        scaleProps={{
+          friction: 90,
+          tension: 100,
+          activeScale: 0.95,
+        }}
         //onPress={() => navigate('SecondScreen', ({...item}))}
         roundAvatar
         rightIcon={<View style={styles.right}>
+                    <Text style={styles.title}> ${item.price_usd}</Text>
                     {item.percent_change_24h < 0 ? 
-                    <Text style={styles.negative}>{item.percent_change_24h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                    <Text style={styles.positive}> {item.percent_change_24h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                    <Text> ${item.price_usd}</Text>
+                    <Text style={styles.negative}>{Number(item.percent_change_24h).toFixed(2)}% <Ionicons name={'md-arrow-dropdown'} size={15} /></Text> : 
+                    <Text style={styles.positive}> {Number(item.percent_change_24h).toFixed(2)}% <Ionicons name={'md-arrow-dropup'} size={15} /></Text> }
+                    
                     </View>}
         title={<View style={styles.left}> 
                     <Text style={styles.title}>{item.name}</Text>
-                    <Text >{item.symbol}</Text>
+                    <Text style={{color: 'grey'}}>{item.symbol}</Text>
                     </View>}
-        containerStyle={{ borderBottomWidth: 0 }}
+        /*containerStyle={{ borderBottomWidth: 0, borderBottomLeftRadius: 10, borderTopRightRadius: 10, marginRight:15,
+          marginLeft:15,
+          marginTop:7,
+          marginBottom:7,
+          
+          elevation: 2,
+          backgroundColor:'rgb(255,255,255)', }}*/
+          containerStyle={{ borderBottomWidth: 0, marginLeft: 10, marginRight: 10, marginTop:5, marginBottom:5,  }}
         />
     </TouchableOpacity>
     )
@@ -44,15 +57,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 17,
+    color: 'white',
   },
   positive: {
     color: '#3CBD61',
-    fontSize: 18,
   },
   negative: {
     color: '#FF5E5E',
-    fontSize: 18,
   },
 });
 
