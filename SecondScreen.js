@@ -36,15 +36,15 @@ export default class App extends React.Component {
               style={[styles.title, { flex: 1 }]}>
               {params.name} 
             </Text>
-            <Text style={{fontSize: 30}}>
+            <Text style={{color: 'white',fontSize: 30}}>
             #{params.rank}
             </Text>
           </View>
           <Text>
-          <Text style={{fontSize: 55}}>
+          <Text style={{color: 'white',fontSize: 55}}>
               ${params.price_usd}
           </Text>
-          <Text style={{fontSize: 30}}> USD </Text>
+          <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>
           <ButtonGroup
             buttons={buttons}
@@ -52,28 +52,28 @@ export default class App extends React.Component {
           />
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={ { flex: 1 }}>
+              style={ { color: 'white',flex: 1 }}>
               Market Cap
             </Text>
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text style={{ color: 'white',fontWeight: 'bold' }}>
             ${params.market_cap_usd}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={ { flex: 1 }}>
+              style={ { color: 'white', flex: 1 }}>
               24hr Volume
             </Text>
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text style={{ color: 'white', fontWeight: 'bold' }}>
             ${params['24h_volume_usd']}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={ { flex: 1 }}>
+              style={ { color: 'white',flex: 1 }}>
               Available Supply
             </Text>
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text style={{ color: 'white',fontWeight: 'bold' }}>
             {params.available_supply}
             </Text>
           </View>
@@ -97,12 +97,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',  
+    color: 'white',
     
   },
   container: {
     flex: 1,
-    margin: 30,
-    top: 40
+    backgroundColor: 'black',
+    paddingTop: 70,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   actionButtonIcon: {
     fontSize: 20,

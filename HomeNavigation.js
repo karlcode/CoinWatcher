@@ -4,7 +4,7 @@ import { Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-
 import { StackNavigator, HeaderBackButton } from 'react-navigation';
 import HomeScreen from './HomeScreen';
 import SecondScreen from './SecondScreen';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const HomeNavigation = StackNavigator({
   Home: { 
     screen: HomeScreen,
@@ -14,14 +14,16 @@ const HomeNavigation = StackNavigator({
     screen: SecondScreen, 
     navigationOptions: ({navigation}) => ({
       tabBarVisible: false, //godlike line
+      headerTintColor: 'white',
       headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 }
       //title: `${navigation.state.params.name}`,
-      
     }),
   },
 },
 {
-  
+  cardStyle: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  }
 })
 
 export default HomeNavigation;

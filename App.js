@@ -16,7 +16,11 @@ export default class App extends React.Component {
   render(){
     return (
       <View style={styles.container}>
-        <View style={styles.statusBar} />
+         <StatusBar
+            translucent={true}
+            backgroundColor="transparent"
+            barStyle="light-content"
+          />
         <Navigation />
       </View>
     );
@@ -26,10 +30,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  statusBar: {
-    backgroundColor: "#3B4044",
-    height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
   },
   /*statusBar: {
     height: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),

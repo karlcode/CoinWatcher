@@ -14,7 +14,7 @@ export default class App extends React.PureComponent {
     return {
       title: 'Home',
       headerTitle: params.search,
-      
+      headerStyle: { backgroundColor: '#3B4044' },
     }
   }
 
