@@ -9,26 +9,8 @@ export default class App extends React.Component {
   }
   
   render() {
-    const component1 = () => <View>{params.percent_change_1h < 0 ? 
-                            <Text style={styles.negative}>{params.percent_change_1h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                            <Text style={styles.positive}> {params.percent_change_1h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                            <Badge containerStyle={{ backgroundColor: 'violet'}}>
-                              <Text>Hour</Text>
-                            </Badge></View>
-    const component2 = () => <View>{params.percent_change_24h < 0 ? 
-                            <Text style={styles.negative}>{params.percent_change_24h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                            <Text style={styles.positive}> {params.percent_change_24h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                            <Badge containerStyle={{ backgroundColor: 'violet'}}>
-                              <Text>Day</Text>
-                            </Badge></View>
-    const component3 = () => <View>{params.percent_change_7d < 0 ? 
-                            <Text style={styles.negative}>{params.percent_change_7d}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                            <Text style={styles.positive}> {params.percent_change_7d}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                            <Badge containerStyle={{ backgroundColor: 'violet', elevation: 10}}>
-                              <Text>Week</Text>
-                            </Badge></View>
     const { params } = this.props.navigation.state;
-    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
+    const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
     return (
       <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -46,17 +28,27 @@ export default class App extends React.Component {
           </Text>
           <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>
-          <ButtonGroup
-            buttons={buttons}
-            containerStyle={{height: 100}}
-          />
+          <FlatList 
+              style={styles.listContainer}
+              data={data}
+              keyExtractor={this._keyExtractor}
+              renderItem={({item}) => <View>
+                                      <Badge containerStyle={{ backgroundColor: 'white', }}>
+                                        <Text>{item.key}</Text>
+                                      </Badge>
+                                      {item.value < 0 ? 
+                                      <Text style={styles.negative}>{item.value}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                                      <Text style={styles.positive}> {item.value}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
+                                      </View>}
+              horizontal={true}
+            />
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={ { color: 'white',flex: 1 }}>
               Market Cap
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>
-            ${params.market_cap_usd}
+            ${Number(params.market_cap_usd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -65,7 +57,7 @@ export default class App extends React.Component {
               24hr Volume
             </Text>
             <Text style={{ color: 'white', fontWeight: 'bold' }}>
-            ${params['24h_volume_usd']}
+            ${Number(params['24h_volume_usd']).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -74,7 +66,7 @@ export default class App extends React.Component {
               Available Supply
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>
-            {params.available_supply}
+            {Number(params.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
         <ActionButton buttonColor="rgba(231,76,60,1)" >
@@ -94,6 +86,9 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  listContainer: {
+    flexDirection: 'row'
+  },
   title: {
     fontSize: 30,
     fontWeight: 'bold',  
