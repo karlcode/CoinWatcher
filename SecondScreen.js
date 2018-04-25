@@ -1,13 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
-import { Button, ButtonGroup, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
+import { Button, ButtonGroup,Card, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
 import ActionButton from 'react-native-circular-action-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 export default class App extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      added: false,
+    };
   }
-  
+  onSubmit = () => {
+    this.setState({added: true});
+  }
   render() {
     const { params } = this.props.navigation.state;
     const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
@@ -28,20 +33,24 @@ export default class App extends React.Component {
           </Text>
           <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>
-          <FlatList 
-              style={styles.listContainer}
-              data={data}
-              keyExtractor={this._keyExtractor}
-              renderItem={({item}) => <View>
-                                      <Badge containerStyle={{ backgroundColor: 'white', }}>
-                                        <Text>{item.key}</Text>
-                                      </Badge>
-                                      {item.value < 0 ? 
-                                      <Text style={styles.negative}>{item.value}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                                      <Text style={styles.positive}> {item.value}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                                      </View>}
-              horizontal={true}
-            />
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          {
+              data.map((item) => {
+                return (
+                  <Card key={item.key} containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent' , margin: 15, padding: 0}}>
+                  <View>
+                  <Badge containerStyle={{ backgroundColor: 'white', }}>
+                      <Text>{item.key}</Text>
+                    </Badge>
+                  {item.value < 0 ? 
+                    <Text style={styles.negative}>{item.value}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                    <Text style={styles.positive}> {item.value}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
+                  </View>
+                  </Card>
+                );
+              })
+            }
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={ { color: 'white',flex: 1 }}>
@@ -69,17 +78,7 @@ export default class App extends React.Component {
             {Number(params.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
-        <ActionButton buttonColor="rgba(231,76,60,1)" >
-          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-            <Icon name="g-translate" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
-            <Icon name="g-translate" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
-            <Icon name="g-translate" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-        </ActionButton>
+          {this.state.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  onPress={this.onSubmit}/>}
       </View>
     );
   }
@@ -87,7 +86,8 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   listContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    height: 100,
   },
   title: {
     fontSize: 30,

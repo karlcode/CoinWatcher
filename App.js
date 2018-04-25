@@ -1,7 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Platform } from 'react-native';
 import Navigation from './Navigation';
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
 import { Font, Constants } from 'expo';
+
+import sampleReducer from './reducer'
+
+const reducer = combineReducers({ sampleReducer })
+const store = createStore(reducer)
+
 export default class App extends React.Component {
   state = {
     fontLoaded: false,
@@ -15,6 +23,7 @@ export default class App extends React.Component {
   }
   render(){
     return (
+      <Provider store={store}>
       <View style={styles.container}>
          <StatusBar
             translucent={true}
@@ -23,6 +32,7 @@ export default class App extends React.Component {
           />
         <Navigation />
       </View>
+      </Provider>
     );
   }
 }
