@@ -5,9 +5,9 @@ import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { Font, Constants } from 'expo';
 
-import sampleReducer from './reducer'
+import reducer from './reducer'
 
-const reducer = combineReducers({ sampleReducer })
+
 const store = createStore(reducer)
 
 export default class App extends React.Component {

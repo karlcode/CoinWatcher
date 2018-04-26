@@ -125,6 +125,7 @@ export default class App extends React.PureComponent {
             //data={this.state.renderData}
             //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
             renderItem={this._renderItem}
+            extraData={this.state}
             keyExtractor={(item, index) => item.id}
             ListEmptyComponent={this.noItemDisplay}
             //extraData={filtered.filter(item => item)}
