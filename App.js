@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Platform } from 'react-native';
 import Navigation from './Navigation';
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { Font, Constants } from 'expo';
 
+import thunk from 'redux-thunk';
 import reducer from './reducer'
 
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 export default class App extends React.Component {
   state = {

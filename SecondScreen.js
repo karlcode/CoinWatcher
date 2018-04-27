@@ -3,16 +3,23 @@ import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } f
 import { Button, ButtonGroup,Card, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
 import ActionButton from 'react-native-circular-action-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-export default class App extends React.Component {
+
+
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from './actions'; //Import your actions
+
+
+
+
+class SecondScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       added: false,
     };
   }
-  onSubmit = () => {
-    this.setState({added: true});
-  }
+
   render() {
     const { params } = this.props.navigation.state;
     const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
@@ -78,11 +85,25 @@ export default class App extends React.Component {
             {Number(params.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
-          {this.state.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  onPress={this.onSubmit}/>}
+          {this.state.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  onPress={()=> {this.props.addCoin(params.id)}}/>}
       </View>
     );
   }
 }
+mapStateToProps = (state, props) => {
+  return {
+      loading: state.dataReducer.loading,
+      data: state.dataReducer.data,
+      crypto: state.dataReducer.crypto
+  }
+}
+
+mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SecondScreen);
+
 
 const styles = StyleSheet.create({
   listContainer: {

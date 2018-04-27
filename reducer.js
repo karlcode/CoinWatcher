@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE } from "./actions" //Import the actions types constant we defined in our actions
 
-import { QUOTES_AVAILABLE, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE } from "./actions" //Import the actions types constant we defined in our actions
-
-let dataState = { data: [], quotes: [], loading:true, crypto: ['YHOLO'], added: false, utter: '' };
+let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '' };
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -10,6 +9,13 @@ const dataReducer = (state = dataState, action) => {
             state = Object.assign({}, state, { data: action.data, loading:false });
             return state;
 
+        case ADD_COIN:{
+            const filtered = state.data.find((item) => item.id == action.id)
+            return {
+                ...state,
+                crypto: [...state.crypto, filtered] //instead of action.id, push the actual filtered data object
+            }
+        }
 
         case ADD_QUOTE:{
             let quotes =  cloneObject(state.quotes) //clone the current state

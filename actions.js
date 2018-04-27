@@ -1,5 +1,6 @@
 export const QUOTES_AVAILABLE = 'QUOTES_AVAILABLE';
 export const ADD_QUOTE = 'ADD_QUOTE';
+export const ADD_COIN = 'ADD_COIN';
 export const UPDATE_QUOTE = 'UPDATE_QUOTE';
 export const DELETE_QUOTE = 'DELETE_QUOTE';
 export const DATA_AVAILABLE = 'DATA_AVAILABLE'
@@ -8,16 +9,21 @@ import {AsyncStorage} from "react-native";
 
 export function getData(){
     return (dispatch) => {
-        const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
-        return fetch(url)
+        fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
         .then(res => res.json())
         .then(json => {
             dispatch({type: DATA_AVAILABLE, data: json}); //refreshing: false , loading: false
         })
         .catch(error => {
-          //dispatch error
+            //dispatch error
         })
- 
+
+    };
+}
+export function addCoin(id){
+    console.log(id);
+    return (dispatch) => {
+        dispatch({type: ADD_COIN, id:id});
     };
 }
 // Add Quote - CREATE (C)

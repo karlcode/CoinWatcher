@@ -8,7 +8,11 @@ import ListRow from './ListRow';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LargeList } from "react-native-largelist";
 import {  LinearGradient } from 'expo';
-export default class App extends React.PureComponent {
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from './actions'; //Import your actions
+
+class HomeScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params || {};
     return {
@@ -22,9 +26,6 @@ export default class App extends React.PureComponent {
     super(props);
 
     this.state = {
-      loading: true,
-      data: [],
-      noData: false,
       error: null,
       refreshing: false,
       searchTerm: ''
@@ -32,24 +33,8 @@ export default class App extends React.PureComponent {
   }
 
   componentDidMount(){
-    this.makeRemoteRequest()
     this._setNavigationParams()
-    console.log("called again");
-  }
-
-  makeRemoteRequest = () => {
-    console.log("FETCHING DATA");
-    //const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
-    const url = `https://api.coinmarketcap.com/v1/ticker/?limit=0`;
-    //const url = `https://min-api.cryptocompare.com/data/`;
-    fetch(url)
-    .then(res => res.json())
-    .then(res => {
-      this.setState({data: res, refreshing: false, loading: false})
-    })
-    .catch(error => {
-      this.setState({error, loading: false});
-    })
+    this.props.getData(); 
   }
 
   handleRefresh = () => {
@@ -114,15 +99,14 @@ export default class App extends React.PureComponent {
   }
 
   render() {
-    const filtered = this.state.data.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
-    console.log("Rendered again");
+    const filtered = this.props.data.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
     return (
       <View style={styles.container}>
-          {this.state.loading ? <ActivityIndicator size="large" color="white" /> : 
+          {this.props.loading ? <ActivityIndicator size="large" color="white" /> : 
             <FlatList
             ref="listRef"
             data={filtered.map(item => item)}
-            //data={this.state.renderData}
+            //data={this.props.data}
             //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
             renderItem={this._renderItem}
             extraData={this.state}
@@ -151,25 +135,20 @@ export default class App extends React.PureComponent {
     );
   }
 }
-/*<FlatList
-            ref="listRef"
-            data={filtered.map(item => item)}
-            //data={this.state.renderData}
-            //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
-            renderItem={this._renderItem}
-            keyExtractor={(item, index) => item.id}
-            ListEmptyComponent={this.noItemDisplay}
-            //extraData={filtered.filter(item => item)}
-            ItemSeparatorComponent={this.renderSeparator}
-            //ListHeaderComponent={this.renderHeader}
-            //ListFooterComponent={this.renderFooter}
 
-            onRefresh={this.handleRefresh}
-            removeClippedSubviews={true}
-            refreshing={this.state.refreshing}
-            initialNumToRender={10}
-            maxToRenderPerBatch={10}
-          />  */
+mapStateToProps = (state, props) => {
+  return {
+      loading: state.dataReducer.loading,
+      data: state.dataReducer.data
+  }
+}
+
+mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
