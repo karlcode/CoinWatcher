@@ -9,7 +9,7 @@ export default class ListRow extends React.PureComponent {
     const { item, filtered } = this.props;
     return(
       <TouchableOpacity 
-          onPress={() => navigate('SecondScreen', ({...item}))}>
+          onPress={() => navigate({key: 'SecondScreen', routeName: 'SecondScreen', params: ({...item})})}>
         <ListItem
         scaleProps={{
           friction: 90,

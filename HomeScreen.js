@@ -11,14 +11,17 @@ import {  LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from './actions'; //Import your actions
+import SearchHeader from './SearchHeader';
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params || {};
     return {
-      title: 'Home',
-      headerTitle: params.search,
-      headerStyle: { backgroundColor: '#3B4044' },
+      header: ( /* Your custom header */
+        <View>
+          <SearchHeader/>
+        </View>
+      )
     }
   }
 
@@ -28,7 +31,7 @@ class HomeScreen extends React.PureComponent {
     this.state = {
       error: null,
       refreshing: false,
-      searchTerm: ''
+      //searchTerm: ''
     };
   }
 
@@ -71,10 +74,10 @@ class HomeScreen extends React.PureComponent {
     );
   }
 
-  _onChangeText = (e) => {
-    this.setState({ searchTerm: e })
-    this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
-  }
+  //_onChangeText = (e) => {
+   // this.setState({ searchTerm: e })
+   // this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
+  //}
 
   _setNavigationParams = () => {
     let search = 
@@ -87,21 +90,20 @@ class HomeScreen extends React.PureComponent {
                             containerStyle={styles.searchBar}
                             //inputStyle={{fontSize: 20, backgroundColor: '#E9EAE8', width: '85%'}}
                             />
-               
     this.props.navigation.setParams({
       search
     })
   }
 
   render() {
-    const filtered = this.props.data.filter(createFilter(this.state.searchTerm, ['name', 'id', 'symbol']))
+    //const filtered = this.props.data.filter(createFilter(this.props.searchTerm, ['name', 'id', 'symbol']))
     return (
       <View style={styles.container}>
           {this.props.loading ? <ActivityIndicator size="large" color="white" /> : 
             <FlatList
             ref="listRef"
-            data={filtered.map(item => item)}
-            //data={this.props.data}
+            //data={filtered.map(item => item)}
+            data={this.props.cleared ? this.props.data : this.props.filteredData}
             //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
             renderItem={this._renderItem}
             extraData={this.state}
@@ -132,10 +134,14 @@ class HomeScreen extends React.PureComponent {
 }
 
 mapStateToProps = (state, props) => {
+  console.log(state.dataReducer);
   return {
       loading: state.dataReducer.loading,
       data: state.dataReducer.data,
-      refreshing: state.dataReducer.refreshing
+      refreshing: state.dataReducer.refreshing,
+      searchTerm: state.dataReducer.searchTerm,
+      cleared: state.dataReducer.cleared,
+      filteredData: state.dataReducer.filteredData
   }
 }
 
@@ -164,7 +170,16 @@ const styles = StyleSheet.create({
   search: {
     elevation: 4,
   },
+  searchHeader: {
+    backgroundColor: '#2D3037',
+    padding: 20,
+    //paddingTop: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight + 10),
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   searchBar: {
     width: '100%',
+    
   }
 });

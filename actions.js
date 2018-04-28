@@ -6,10 +6,22 @@ export const DELETE_QUOTE = 'DELETE_QUOTE';
 export const DATA_AVAILABLE = 'DATA_AVAILABLE'
 export const GET_PORTFOLIO = 'GET_PORTFOLIO';
 export const FETCHING_DATA = 'FETCHING_DATA';
+export const SEARCH_TERM = 'SEARCH_TERM';
+export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 
 
 import {AsyncStorage} from "react-native";
-
+export function searchTerm(e){
+    console.log(e);
+    return (dispatch) => {
+        dispatch({type: SEARCH_TERM, searchterm: e});
+    };
+}
+export function clearSearch(){
+    return (dispatch) => {
+        dispatch({type: CLEAR_SEARCH});
+    };
+}
 export function getData(){
     return (dispatch) => {
         dispatch({type: FETCHING_DATA});

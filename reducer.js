@@ -1,19 +1,30 @@
 import { combineReducers } from 'redux';
-import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA } from "./actions" //Import the actions types constant we defined in our actions
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH } from "./actions" //Import the actions types constant we defined in our actions
 import update from 'immutability-helper';
+import SearchInput, { createFilter } from 'react-native-search-filter';
 
-let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false};
+let dataState = { data: [], filteredData: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false, searchTerm: '', cleared: true};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
-        case DATA_AVAILABLE:
+        case DATA_AVAILABLE:{
             state = Object.assign({}, state, { data: action.data, loading:false, refreshing: false });
             return state;
-
-        case FETCHING_DATA:
+        }
+        case FETCHING_DATA:{
             state = Object.assign({}, state, { refreshing: true });
         return state;
-
+        }
+        case SEARCH_TERM: {
+            console.log(action.searchterm);
+            const filtered = state.data.filter(createFilter(action.searchterm, ['name', 'id', 'symbol']))
+            state = Object.assign({}, state, { filteredData: filtered, cleared: false });
+        return state;
+        }
+        case CLEAR_SEARCH: {
+            state = Object.assign({}, state, { cleared: true });
+        return state;
+        }
         case ADD_COIN:{
             const filtered = state.data.find((item) => item.id == action.id)
             const index = state.crypto.findIndex((item) => item.id == action.id)

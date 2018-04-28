@@ -1,43 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, ToastAndroid } from 'react-native';
 import { Button, ButtonGroup,Card, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
-import ActionButton from 'react-native-circular-action-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-
+//import ActionButton from './ActionButton'
+import ActionButton from 'react-native-circular-action-menu';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from './actions'; //Import your actions
 
-
-
-
 class SecondScreen extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      added: false,
-    };
-  }
-
   render() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
+    const coin = this.props.data.find((item) => item.id == params.id)
     const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
     return (
       <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
               style={[styles.title, { flex: 1 }]}>
-              {params.name} 
+              {coin.name} 
             </Text>
             <Text style={{color: 'white',fontSize: 30}}>
-            #{params.rank}
+            #{coin.rank}
             </Text>
           </View>
           <Text>
           <Text style={{color: 'white',fontSize: 55}}>
-              ${params.price_usd}
+              ${coin.price_usd}
           </Text>
           <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>
@@ -65,7 +55,7 @@ class SecondScreen extends React.Component {
               Market Cap
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>
-            ${Number(params.market_cap_usd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            ${Number(coin.market_cap_usd).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -74,7 +64,7 @@ class SecondScreen extends React.Component {
               24hr Volume
             </Text>
             <Text style={{ color: 'white', fontWeight: 'bold' }}>
-            ${Number(params['24h_volume_usd']).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            ${Number(coin['24h_volume_usd']).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -83,10 +73,10 @@ class SecondScreen extends React.Component {
               Available Supply
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>
-            {Number(params.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {Number(coin.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
-          {params.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  
+          {coin.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  
           onPress={()=> {this.props.addCoin(params.id)
             ToastAndroid.show(`Added new ${params.id} coin`, ToastAndroid.SHORT)
             navigate('Portfolio')}}/>}
@@ -96,9 +86,7 @@ class SecondScreen extends React.Component {
 }
 mapStateToProps = (state, props) => {
   return {
-      loading: state.dataReducer.loading,
-      data: state.dataReducer.data,
-      crypto: state.dataReducer.crypto
+      data: state.dataReducer.data
   }
 }
 

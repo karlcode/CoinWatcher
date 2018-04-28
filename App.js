@@ -9,7 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk';
 import rootReducer from './reducer'
-
+/*
 const persistConfig = {
   key: 'root',
   storage,
@@ -17,7 +17,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(persistedReducer, applyMiddleware(thunk))
 const persistor = persistStore(store)
-
+*/
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default class App extends React.Component {
   state = {
@@ -33,7 +34,7 @@ export default class App extends React.Component {
   render(){
     return (
       <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/*<PersistGate loading={null} persistor={persistor}>*/}
       <View style={styles.container}>
          <StatusBar
             translucent={true}
@@ -42,7 +43,7 @@ export default class App extends React.Component {
           />
         <Navigation />
       </View>
-      </PersistGate>
+      {/*</PersistGate>*/}
       </Provider>
     );
   }
