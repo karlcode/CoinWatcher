@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, ToastAndroid } from 'react-native';
 import { Button, ButtonGroup,Card, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
 import ActionButton from 'react-native-circular-action-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -22,6 +22,7 @@ class SecondScreen extends React.Component {
 
   render() {
     const { params } = this.props.navigation.state;
+    const { navigate } = this.props.navigation;
     const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
     return (
       <View style={styles.container}>
@@ -85,7 +86,10 @@ class SecondScreen extends React.Component {
             {Number(params.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
-          {this.state.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  onPress={()=> {this.props.addCoin(params.id)}}/>}
+          {params.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  
+          onPress={()=> {this.props.addCoin(params.id)
+            ToastAndroid.show(`Added new ${params.id} coin`, ToastAndroid.SHORT)
+            navigate('Portfolio')}}/>}
       </View>
     );
   }

@@ -16,7 +16,7 @@ export function getData(){
         fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
         .then(res => res.json())
         .then(json => {
-            dispatch({type: DATA_AVAILABLE, data: json}); //refreshing: false , loading: false
+            dispatch({type: DATA_AVAILABLE, data: json});
             console.log("FETCHED THE DATA");
         })
         .catch(error => {
@@ -26,9 +26,8 @@ export function getData(){
     };
 }
 export function addCoin(id){
-    console.log(id);
     return (dispatch) => {
-                dispatch({type: ADD_COIN, id:id});
+                dispatch({type: ADD_COIN, id:id, added: true});
     };
 }
 export function getPortfolio(){

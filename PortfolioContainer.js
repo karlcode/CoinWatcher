@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } f
 import { Card, Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import Portfolio from './Portfolio';
+import PortfolioRow from './PortfolioRow';
 import ListRow from './ListRow';
 import {bindActionCreators} from 'redux';
 import * as Actions from './actions'; //Import your actions
@@ -17,18 +18,17 @@ class PortfolioContainer extends React.Component {
   }
   _renderItem = ({item}) => {
       return (
-        //<ListRow item={item} navigation={this.props.navigation}/> 
-        <Text>{item.name}</Text>
+        <PortfolioRow item={item}/> 
       );
     }
   render(){
-    console.log(this.props.crypto);
     return (
       <View style={styles.container}>
         <FlatList
             data={this.props.crypto.map(item => item)}
             extraData={this.props}
             renderItem={this._renderItem}
+            keyExtractor={(item, index) => item.id}
         />
         <Text>Its lit</Text>
       </View>
@@ -38,7 +38,6 @@ class PortfolioContainer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
     justifyContent: 'center',
   },
   item: {

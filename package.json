@@ -32,6 +32,7 @@
     "@atlaskit/icon": "^11.0.0",
     "@atlaskit/theme": "^3.0.0",
     "expo": "^23.0.4",
+    "immutability-helper": "^2.6.6",
     "native-base": "^2.4.2",
     "react": "16.0.0",
     "react-native": "0.50.3",
@@ -47,7 +48,7 @@
     "react-redux": "^5.0.7",
     "react-search-input": "^0.11.3",
     "redux": "^4.0.0",
-    "redux-persist": "^5.9.1",
+    "redux-persist": "^5.7.2",
     "redux-thunk": "^2.2.0"
   }
 }

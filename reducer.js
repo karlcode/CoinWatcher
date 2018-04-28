@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA } from "./actions" //Import the actions types constant we defined in our actions
+import update from 'immutability-helper';
 
-let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false };
+let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
         case DATA_AVAILABLE:
-            console.log("ACTGUALLY DETCHED DATA");
             state = Object.assign({}, state, { data: action.data, loading:false, refreshing: false });
             return state;
 
@@ -16,10 +16,18 @@ const dataReducer = (state = dataState, action) => {
 
         case ADD_COIN:{
             const filtered = state.data.find((item) => item.id == action.id)
-            return {
-                ...state,
-                crypto: [...state.crypto, filtered] 
+            const index = state.crypto.findIndex((item) => item.id == action.id)
+            if(index == -1){
+                return {
+                    ...state,
+                    data: state.data.map((item) => item.id == action.id ? 
+                    { ...item, added: action.added} :                   //replace with immutability helper later down the track
+                    item),
+                    crypto: [...state.crypto, filtered] 
+                }
             }
+            console.log("DUPLICATE COIN ADDED");
+            return state
         }
         case GET_PORTFOLIO:{
             state = Object.assign({}, state, { crypto: state.crypto, loading:false });
