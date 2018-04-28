@@ -12,6 +12,9 @@ class PortfolioContainer extends React.Component {
     super(props);
 
   }
+  componentDidMount(){
+    this.props.getPortfolio();
+  }
   _renderItem = ({item}) => {
       return (
         //<ListRow item={item} navigation={this.props.navigation}/> 

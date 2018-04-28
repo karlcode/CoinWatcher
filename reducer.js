@@ -1,22 +1,30 @@
 import { combineReducers } from 'redux';
-import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE } from "./actions" //Import the actions types constant we defined in our actions
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA } from "./actions" //Import the actions types constant we defined in our actions
 
-let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '' };
+let dataState = { data: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false };
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
         case DATA_AVAILABLE:
-            state = Object.assign({}, state, { data: action.data, loading:false });
+            console.log("ACTGUALLY DETCHED DATA");
+            state = Object.assign({}, state, { data: action.data, loading:false, refreshing: false });
             return state;
+
+        case FETCHING_DATA:
+            state = Object.assign({}, state, { refreshing: true });
+        return state;
 
         case ADD_COIN:{
             const filtered = state.data.find((item) => item.id == action.id)
             return {
                 ...state,
-                crypto: [...state.crypto, filtered] //instead of action.id, push the actual filtered data object
+                crypto: [...state.crypto, filtered] 
             }
         }
-
+        case GET_PORTFOLIO:{
+            state = Object.assign({}, state, { crypto: state.crypto, loading:false });
+            return state;
+        }
         case ADD_QUOTE:{
             let quotes =  cloneObject(state.quotes) //clone the current state
             quotes.unshift(action.quote); //add the new quote to the top

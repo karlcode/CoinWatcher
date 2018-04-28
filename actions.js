@@ -4,15 +4,20 @@ export const ADD_COIN = 'ADD_COIN';
 export const UPDATE_QUOTE = 'UPDATE_QUOTE';
 export const DELETE_QUOTE = 'DELETE_QUOTE';
 export const DATA_AVAILABLE = 'DATA_AVAILABLE'
+export const GET_PORTFOLIO = 'GET_PORTFOLIO';
+export const FETCHING_DATA = 'FETCHING_DATA';
+
 
 import {AsyncStorage} from "react-native";
 
 export function getData(){
     return (dispatch) => {
+        dispatch({type: FETCHING_DATA});
         fetch(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
         .then(res => res.json())
         .then(json => {
             dispatch({type: DATA_AVAILABLE, data: json}); //refreshing: false , loading: false
+            console.log("FETCHED THE DATA");
         })
         .catch(error => {
             //dispatch error
@@ -23,7 +28,18 @@ export function getData(){
 export function addCoin(id){
     console.log(id);
     return (dispatch) => {
-        dispatch({type: ADD_COIN, id:id});
+                dispatch({type: ADD_COIN, id:id});
+    };
+}
+export function getPortfolio(){
+    //console.log(id);
+    return (dispatch) => {
+        AsyncStorage.getItem('data', (err, crypto) => {
+            console.log(crypto);
+            if (crypto !== null){
+                dispatch({type: GET_PORTFOLIO, crypto:crypto});
+            }
+          });
     };
 }
 // Add Quote - CREATE (C)

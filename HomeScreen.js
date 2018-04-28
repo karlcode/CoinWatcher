@@ -40,14 +40,9 @@ class HomeScreen extends React.PureComponent {
   handleRefresh = () => {
     console.log("refreshing")
     this.setState(
-      {
-        refreshing: true
-      },
-      () => {
-        this.makeRemoteRequest();
-      }
+      {refreshing: true},
     );
-  };
+    this.props.getData();  };
 
   renderSeparator = () => {
     return (
@@ -118,7 +113,7 @@ class HomeScreen extends React.PureComponent {
             //ListFooterComponent={this.renderFooter}
             onRefresh={this.handleRefresh}
             removeClippedSubviews={true}
-            refreshing={this.state.refreshing}
+            refreshing={this.props.refreshing}
             initialNumToRender={10}
             maxToRenderPerBatch={10}
           /> 
@@ -139,7 +134,8 @@ class HomeScreen extends React.PureComponent {
 mapStateToProps = (state, props) => {
   return {
       loading: state.dataReducer.loading,
-      data: state.dataReducer.data
+      data: state.dataReducer.data,
+      refreshing: state.dataReducer.refreshing
   }
 }
 
