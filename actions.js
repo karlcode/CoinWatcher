@@ -8,6 +8,7 @@ export const GET_PORTFOLIO = 'GET_PORTFOLIO';
 export const FETCHING_DATA = 'FETCHING_DATA';
 export const SEARCH_TERM = 'SEARCH_TERM';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
+export const CHANGE_PERIOD = 'CHANGE_PERIOD';
 
 
 import {AsyncStorage} from "react-native";
@@ -20,6 +21,11 @@ export function searchTerm(e){
 export function clearSearch(){
     return (dispatch) => {
         dispatch({type: CLEAR_SEARCH});
+    };
+}
+export function changePeriod(idx){
+    return (dispatch) => {
+        dispatch({type: CHANGE_PERIOD, period: idx});
     };
 }
 export function getData(){

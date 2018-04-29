@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
 import { Card, Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import { iOSUIKit } from 'react-native-typography'
 
 export default class CustomHeader extends React.Component {
 
@@ -10,7 +10,7 @@ export default class CustomHeader extends React.Component {
     return (
       <View style={styles.container}>
         <Ionicons name={'md-more'} size={30} style={{ alignSelf: 'flex-end'}} color='white'/>
-        <Text style={{color: 'white', fontSize: 27, fontWeight: 'bold'}}>Portfolio</Text>
+        <Text style={[iOSUIKit.largeTitleEmphasized, styles.title]}>Portfolio</Text>
       </View>
     );
   }
@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     paddingTop: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight + 10),
     flexDirection: 'column',
     justifyContent: 'space-between',
+  },
+  title: {
+    color: 'white',
   },
   item: {
     padding: 10,

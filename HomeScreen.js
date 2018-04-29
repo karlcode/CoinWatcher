@@ -124,7 +124,7 @@ class HomeScreen extends React.PureComponent {
         <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
           <LinearGradient style={{
             
-            height: 250,
+            height: 150,
           }} 
           colors={[ 'rgba(0,0,0,0)', 'rgb(20,20,20)' ] } />
         </View>
@@ -134,7 +134,6 @@ class HomeScreen extends React.PureComponent {
 }
 
 mapStateToProps = (state, props) => {
-  console.log(state.dataReducer);
   return {
       loading: state.dataReducer.loading,
       data: state.dataReducer.data,

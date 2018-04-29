@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH } from "./actions" //Import the actions types constant we defined in our actions
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH, CHANGE_PERIOD } from "./actions" //Import the actions types constant we defined in our actions
 import update from 'immutability-helper';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 
-let dataState = { data: [], filteredData: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false, searchTerm: '', cleared: true};
+let dataState = { data: [], filteredData: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false, searchTerm: '', cleared: true, timePeriod: 0, period: 'percent_change_1h', timeCategory: '%1h'};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -19,6 +19,25 @@ const dataReducer = (state = dataState, action) => {
             console.log(action.searchterm);
             const filtered = state.data.filter(createFilter(action.searchterm, ['name', 'id', 'symbol']))
             state = Object.assign({}, state, { filteredData: filtered, cleared: false });
+        return state;
+        }
+        case CHANGE_PERIOD: {
+            const time_period = ''
+            const time_category = ''
+            if(action.period == 0){
+                    time_period = 'percent_change_1h'
+                    time_category = '%1h'
+            } 
+            else if(action.period == 1) {
+                    time_period = 'percent_change_24h'
+                    time_category = '%24h'
+            }
+            else {
+                    time_period = 'percent_change_7d'
+                    time_category = '%7d'
+            }
+            console.log(time_period);
+            state = Object.assign({}, state, { timePeriod: action.period, period: time_period});
         return state;
         }
         case CLEAR_SEARCH: {

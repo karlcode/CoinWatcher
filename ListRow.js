@@ -2,11 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableOpacity } from 'react-native';
 import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { iOSUIKit } from 'react-native-typography'
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from './actions'; //Import your actions
 
-export default class ListRow extends React.PureComponent { 
+class ListRow extends React.PureComponent { 
+  
   render(){
     const { navigate } = this.props.navigation;
     const { item, filtered } = this.props;
+
     return(
       <TouchableOpacity 
           onPress={() => navigate({key: 'SecondScreen', routeName: 'SecondScreen', params: ({...item})})}>
@@ -19,14 +25,14 @@ export default class ListRow extends React.PureComponent {
         //onPress={() => navigate('SecondScreen', ({...item}))}
         roundAvatar
         rightIcon={<View style={styles.right}>
-                    <Text style={styles.title}> ${item.price_usd}</Text>
-                    {item.percent_change_24h < 0 ? 
-                    <Text style={styles.negative}>{Number(item.percent_change_24h).toFixed(2)}% <Ionicons name={'md-arrow-dropdown'} size={15} /></Text> : 
-                    <Text style={styles.positive}> {Number(item.percent_change_24h).toFixed(2)}% <Ionicons name={'md-arrow-dropup'} size={15} /></Text> }
+                    <Text style={[iOSUIKit.subhead, styles.title]}> ${item.price_usd}</Text>
+                    {item[this.props.period] < 0 ? 
+                    <Text style={styles.negative}>{Number(item[this.props.period]).toFixed(2)}% <Ionicons name={'md-arrow-dropdown'} size={15} /></Text> : 
+                    <Text style={styles.positive}> {Number(item[this.props.period]).toFixed(2)}% <Ionicons name={'md-arrow-dropup'} size={15} /></Text> }
                     
                     </View>}
         title={<View style={styles.left}> 
-                    <Text style={styles.title}>{item.name}</Text>
+                    <Text style={[iOSUIKit.bodyEmphasized, styles.title]}>{item.name}</Text>
                     <Text style={{color: 'grey'}}>{item.symbol}</Text>
                     </View>}
         /*containerStyle={{ borderBottomWidth: 0, borderBottomLeftRadius: 10, borderTopRightRadius: 10, marginRight:15,
@@ -42,6 +48,21 @@ export default class ListRow extends React.PureComponent {
     )
   }
 }
+
+mapStateToProps = (state, props) => {
+  return {
+      loading: state.dataReducer.loading,
+      data: state.dataReducer.data,
+      period: state.dataReducer.period
+  }
+}
+
+mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListRow);
+
 const styles = StyleSheet.create({
   left: {
     flex: 1,
@@ -56,8 +77,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 17,
     color: 'white',
   },
   positive: {
