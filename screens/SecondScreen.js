@@ -26,7 +26,7 @@ class SecondScreen extends React.Component {
           </View>
           <Text>
           <Text style={{color: 'white',fontSize: 55}}>
-              ${coin.price_usd}
+              ${coin.price_usd < 1 ? Number(coin.price_usd).toFixed(4) : Number(coin.price_usd).toFixed(2)}
           </Text>
           <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>

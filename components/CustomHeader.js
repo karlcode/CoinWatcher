@@ -9,7 +9,7 @@ export default class CustomHeader extends React.Component {
   render(){
     return (
       <View style={styles.container}>
-        <Ionicons name={'md-more'} size={30} style={{ alignSelf: 'flex-end'}} color='white'/>
+        <Ionicons name={'md-more'} size={20} style={{ alignSelf: 'flex-end'}} color='transparent'/>
         <Text style={[iOSUIKit.largeTitleEmphasized, styles.title]}>Portfolio</Text>
       </View>
     );
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#2D3037',
     padding: 20,
-    paddingTop: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight + 10),
+    paddingTop: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),
     flexDirection: 'column',
     justifyContent: 'space-between',
   },

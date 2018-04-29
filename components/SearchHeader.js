@@ -23,9 +23,9 @@ class SearchHeader extends React.Component {
       <View style={styles.container}>
         <Ionicons
           name={"md-more"}
-          size={30}
+          size={20}
           style={{ alignSelf: "flex-end" }}
-          color="white"
+          color="transparent"
         />
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           <Text style={[iOSUIKit.largeTitleEmphasized, styles.title]}>

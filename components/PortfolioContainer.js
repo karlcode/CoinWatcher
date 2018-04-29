@@ -2,14 +2,12 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import PortfolioRow from './PortfolioRow';
 import * as Actions from '../actions'; //Import your actions
 
 class PortfolioContainer extends React.Component {
-  constructor(props) {
-    super(props);
 
-  }
   componentDidMount(){
     this.props.getPortfolio();
   }
@@ -18,6 +16,12 @@ class PortfolioContainer extends React.Component {
         <PortfolioRow item={item}/> 
       );
     }
+  noItemDisplay = () => {
+    return (
+      <View style={[styles.container, styles.horizontal]}>
+      </View>
+    );
+  };
   render(){
     return (
       <View style={styles.container}>
@@ -26,6 +30,7 @@ class PortfolioContainer extends React.Component {
             extraData={this.props}
             renderItem={this._renderItem}
             keyExtractor={(item, index) => item.id}
+            ListEmptyComponent={this.noItemDisplay}
         />
       </View>
     );
@@ -34,7 +39,13 @@ class PortfolioContainer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: "rgba(0,0,0,1)",
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "column",
+    justifyContent: "space-around",
+    padding: 10
   },
   item: {
     padding: 10,
