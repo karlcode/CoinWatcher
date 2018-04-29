@@ -1,17 +1,12 @@
+import { LinearGradient } from 'expo';
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableHighlight, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
-import { Button, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
-import {  Header, } from 'native-base';
-import SearchInput, { createFilter } from 'react-native-search-filter';
-import CryptoIcon from 'react-native-crypto-icons';
-import ListRow from './ListRow';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { LargeList } from "react-native-largelist";
-import {  LinearGradient } from 'expo';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as Actions from './actions'; //Import your actions
-import SearchHeader from './SearchHeader';
+import { bindActionCreators } from 'redux';
+import ListRow from '../components/ListRow';
+import SearchHeader from '../components/SearchHeader';
+import * as Actions from '../actions'; //Import your actions
 
 class HomeScreen extends React.PureComponent {
   static navigationOptions = ({navigation}) => {

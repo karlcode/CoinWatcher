@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
 import { Card, Button, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
-import PortfolioContainer from './PortfolioContainer'
-import CustomHeader from './CustomHeader'
+import PortfolioContainer from '../components/PortfolioContainer'
+import CustomHeader from '../components/CustomHeader'
 export default class Portfolio extends React.Component {
 
   render() {

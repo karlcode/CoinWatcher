@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, ToastAndroid } from 'react-native';
 import { Button, ButtonGroup,Card, Header, List, ListItem, SearchBar, Overlay, Icon, Badge } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-//import ActionButton from './ActionButton'
 import ActionButton from 'react-native-circular-action-menu';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as Actions from './actions'; //Import your actions
+import * as Actions from '../actions'; //Import your actions
 
 class SecondScreen extends React.Component {
   render() {

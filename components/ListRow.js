@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar, TouchableOpacity } from 'react-native';
-import { Button, Header, ListItem, SearchBar, Overlay, Card } from 'react-native-elements';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import { iOSUIKit } from 'react-native-typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { iOSUIKit } from 'react-native-typography'
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as Actions from './actions'; //Import your actions
+import { bindActionCreators } from 'redux';
+import * as Actions from '../actions'; //Import your actions
 
 class ListRow extends React.PureComponent { 
   

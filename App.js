@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar, Platform } from 'react-native';
-import Navigation from './Navigation';
+import Navigation from './navigation/Navigation';
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { Font, Constants } from 'expo';

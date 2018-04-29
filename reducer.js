@@ -3,7 +3,7 @@ import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA
 import update from 'immutability-helper';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 
-let dataState = { data: [], filteredData: [], quotes: [], loading:true, crypto: [], added: false, utter: '', refreshing: false, searchTerm: '', cleared: true, timePeriod: 0, period: 'percent_change_1h', timeCategory: '%1h'};
+let dataState = { data: [], filteredData: [], loading:true, crypto: [], added: false, refreshing: false, searchTerm: '', cleared: true, timePeriod: 1, period: 'percent_change_24h', timeCategory: '%24h'};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -99,17 +99,6 @@ const dataReducer = (state = dataState, action) => {
     }
 };
 
-/*
-function cloneObject(object){
-    return JSON.parse(JSON.stringify(object));
-}
-
-function getIndex(data, id){
-    let clone = JSON.parse(JSON.stringify(data));
-    return clone.findIndex((obj) => parseInt(obj.id) === parseInt(id));
-}
-*/
-// Combine all the reducers
 const rootReducer = combineReducers({
     dataReducer
 })

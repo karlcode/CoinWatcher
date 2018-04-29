@@ -1,12 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Alert, FlatList, Platform, StatusBar } from 'react-native';
-import { Card, Button, Header, List, ListItem, SearchBar, Overlay, Icon } from 'react-native-elements';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import Portfolio from './Portfolio';
+import { bindActionCreators } from 'redux';
 import PortfolioRow from './PortfolioRow';
-import ListRow from './ListRow';
-import {bindActionCreators} from 'redux';
-import * as Actions from './actions'; //Import your actions
+import * as Actions from '../actions'; //Import your actions
 
 class PortfolioContainer extends React.Component {
   constructor(props) {
