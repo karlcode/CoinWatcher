@@ -15,7 +15,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as Actions from "../actions"; //Import your actions
 
+
 class SearchHeader extends React.Component {
+  
   render() {
     return (
       <View style={styles.container}>

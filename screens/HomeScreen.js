@@ -5,6 +5,7 @@ import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ListRow from '../components/ListRow';
+import ListContainer from '../components/ListContainer';
 import SearchHeader from '../components/SearchHeader';
 import * as Actions from '../actions'; //Import your actions
 
@@ -22,7 +23,6 @@ class HomeScreen extends React.PureComponent {
 
   constructor(props){
     super(props);
-
     this.state = {
       error: null,
       refreshing: false,
@@ -71,7 +71,7 @@ class HomeScreen extends React.PureComponent {
 
   //_onChangeText = (e) => {
    // this.setState({ searchTerm: e })
-   // this.refs.listRef.scrollToOffset({x: 0, y: 0, animated: true})
+   // 
   //}
 
   _setNavigationParams = () => {
@@ -91,29 +91,28 @@ class HomeScreen extends React.PureComponent {
   }
 
   render() {
-    //const filtered = this.props.data.filter(createFilter(this.props.searchTerm, ['name', 'id', 'symbol']))
+    
     return (
       <View style={styles.container}>
           {this.props.loading ? <ActivityIndicator size="large" color="white" /> : 
-            <FlatList
+          
+            /*<FlatList
             ref="listRef"
-            //data={filtered.map(item => item)}
             data={this.props.cleared ? this.props.data : this.props.filteredData}
-            //getItemLayout={(data, index) => ({length: 100, offset: 100 * index, index})}  this was the cause of slowdown since it dynamically resized each item
             renderItem={this._renderItem}
             extraData={this.state}
             keyExtractor={(item, index) => item.id}
             ListEmptyComponent={this.noItemDisplay}
-            //extraData={filtered.filter(item => item)}
             ItemSeparatorComponent={this.renderSeparator}
-            //ListHeaderComponent={this.renderHeader}
-            //ListFooterComponent={this.renderFooter}
             onRefresh={this.handleRefresh}
             removeClippedSubviews={true}
             refreshing={this.props.refreshing}
             initialNumToRender={10}
             maxToRenderPerBatch={10}
-          /> 
+            /> */
+            <ListContainer 
+            navigation={this.props.navigation}/>
+          
           }
           
         <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>

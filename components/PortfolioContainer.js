@@ -27,7 +27,6 @@ class PortfolioContainer extends React.Component {
             renderItem={this._renderItem}
             keyExtractor={(item, index) => item.id}
         />
-        <Text>Its lit</Text>
       </View>
     );
   }
