@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH, CHANGE_PERIOD } from "./actions" //Import the actions types constant we defined in our actions
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, CHARTDATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH, CHANGE_PERIOD, FETCHING_CHARTDATA } from "./actions" //Import the actions types constant we defined in our actions
 import update from 'immutability-helper';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 
-let dataState = { data: [], filteredData: [], loading:true, crypto: [], added: false, refreshing: false, searchTerm: '', cleared: true, timePeriod: 1, period: 'percent_change_24h', timeCategory: '%24h'};
+let dataState = { data: [], filteredData: [], isFetching: true, chartData: [], loading:true, crypto: [], added: false, refreshing: false, searchTerm: '', cleared: true, timePeriod: 1, period: 'percent_change_24h', timeCategory: '%24h'};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -11,8 +11,16 @@ const dataReducer = (state = dataState, action) => {
             state = Object.assign({}, state, { data: action.data, loading:false, refreshing: false });
             return state;
         }
+        case CHARTDATA_AVAILABLE:{
+            state = Object.assign({}, state, { chartData: action.chartData, isFetching: false});
+            return state;
+        }
         case FETCHING_DATA:{
             state = Object.assign({}, state, { refreshing: true });
+        return state;
+        }
+        case FETCHING_CHARTDATA:{
+            state = Object.assign({}, state, { isFetching: true });
         return state;
         }
         case SEARCH_TERM: {

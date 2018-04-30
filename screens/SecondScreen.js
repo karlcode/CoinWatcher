@@ -6,8 +6,14 @@ import ActionButton from 'react-native-circular-action-menu';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions'; //Import your actions
+import CoinChart from '../components/CoinChart'
 
 class SecondScreen extends React.Component {
+  
+  componentDidMount(){
+    this.props.getChartData(this.props.navigation.state.params.symbol)
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
@@ -30,6 +36,7 @@ class SecondScreen extends React.Component {
           </Text>
           <Text style={{color: 'white',fontSize: 30}}> USD </Text>
           </Text>
+          <CoinChart data={this.props.chartData}/>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
           {
               data.map((item) => {
@@ -85,7 +92,9 @@ class SecondScreen extends React.Component {
 }
 mapStateToProps = (state, props) => {
   return {
-      data: state.dataReducer.data
+      data: state.dataReducer.data,
+      chartData: state.dataReducer.chartData,
+      isFetching: state.dataReducer.isFetching
   }
 }
 

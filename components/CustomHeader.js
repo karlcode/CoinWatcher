@@ -10,7 +10,7 @@ export default class CustomHeader extends React.Component {
     return (
       <View style={styles.container}>
         <Ionicons name={'md-more'} size={20} style={{ alignSelf: 'flex-end'}} color='transparent'/>
-        <Text style={[iOSUIKit.largeTitleEmphasized, styles.title]}>Portfolio</Text>
+        <Text style={[iOSUIKit.largeTitleEmphasized, styles.title]}>Watchlist</Text>
       </View>
     );
   }

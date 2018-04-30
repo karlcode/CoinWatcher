@@ -9,6 +9,8 @@ export const FETCHING_DATA = 'FETCHING_DATA';
 export const SEARCH_TERM = 'SEARCH_TERM';
 export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 export const CHANGE_PERIOD = 'CHANGE_PERIOD';
+export const CHARTDATA_AVAILABLE = 'CHARTDATA_AVAILABLE';
+export const FETCHING_CHARTDATA = 'FETCHING_CHARTDATA';
 
 
 import {AsyncStorage} from "react-native";
@@ -36,6 +38,21 @@ export function getData(){
         .then(json => {
             dispatch({type: DATA_AVAILABLE, data: json});
             console.log("FETCHED THE DATA");
+        })
+        .catch(error => {
+            //dispatch error
+        })
+
+    };
+}
+export function getChartData(symbol){
+    return (dispatch) => {
+        dispatch({type: FETCHING_CHARTDATA, isFetching: true});
+        fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=360`)
+        .then(res => res.json())
+        .then(json => {
+            dispatch({type: CHARTDATA_AVAILABLE, chartData: json, isFetching: false});
+            console.log("FETCHED" + symbol);
         })
         .catch(error => {
             //dispatch error
