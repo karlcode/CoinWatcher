@@ -11,6 +11,7 @@ export const CLEAR_SEARCH = 'CLEAR_SEARCH';
 export const CHANGE_PERIOD = 'CHANGE_PERIOD';
 export const CHARTDATA_AVAILABLE = 'CHARTDATA_AVAILABLE';
 export const FETCHING_CHARTDATA = 'FETCHING_CHARTDATA';
+export const CHANGE_CHARTPERIOD = 'CHANGE_CHARTPERIOD';
 
 
 import {AsyncStorage} from "react-native";
@@ -30,6 +31,12 @@ export function changePeriod(idx){
         dispatch({type: CHANGE_PERIOD, period: idx});
     };
 }
+export function changeChartPeriod(time){
+    return (dispatch) => {
+        dispatch({type: CHANGE_CHARTPERIOD, chartPeriod: time});
+    };
+}
+
 export function getData(){
     return (dispatch) => {
         dispatch({type: FETCHING_DATA});

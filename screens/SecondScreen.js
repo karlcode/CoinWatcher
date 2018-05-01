@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions'; //Import your actions
 import CoinChart from '../components/CoinChart'
+import { iOSUIKit, human } from "react-native-typography";
 
 class SecondScreen extends React.Component {
   
@@ -23,19 +24,19 @@ class SecondScreen extends React.Component {
       <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={[styles.title, { flex: 1 }]}>
+              style={[iOSUIKit.largeTitleEmphasized, { flex: 1, color: 'white' }]}>
               {coin.name} 
             </Text>
-            <Text style={{color: 'white',fontSize: 30}}>
+            <Text style={[human.headline, { color: 'white' }]}>
             #{coin.rank}
             </Text>
           </View>
-          <Text>
-          <Text style={{color: 'white',fontSize: 55}}>
-              ${coin.price_usd < 1 ? Number(coin.price_usd).toFixed(4) : Number(coin.price_usd).toFixed(2)}
-          </Text>
-          <Text style={{color: 'white',fontSize: 30}}> USD </Text>
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={[human.largeTitle, {color: 'white'}]}>
+                ${coin.price_usd < 1 ? Number(coin.price_usd).toFixed(4) : Number(coin.price_usd).toFixed(2)}
+            </Text>
+            <Text style={[human.headline, { color: 'white', alignSelf: 'center' }]}> USD </Text>
+          </View>
           <CoinChart data={this.props.chartData}/>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
           {
@@ -55,9 +56,9 @@ class SecondScreen extends React.Component {
               })
             }
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 30 }}>
             <Text
-              style={ { color: 'white',flex: 1 }}>
+              style={ [human.footnote, { color: 'grey',flex: 1 }]}>
               Market Cap
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>
@@ -66,7 +67,7 @@ class SecondScreen extends React.Component {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={ { color: 'white', flex: 1 }}>
+              style={ [human.footnote, { color: 'grey',flex: 1 }]}>
               24hr Volume
             </Text>
             <Text style={{ color: 'white', fontWeight: 'bold' }}>
@@ -75,7 +76,7 @@ class SecondScreen extends React.Component {
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text
-              style={ { color: 'white',flex: 1 }}>
+              style={ [human.footnote, { color: 'grey',flex: 1 }]}>
               Available Supply
             </Text>
             <Text style={{ color: 'white',fontWeight: 'bold' }}>

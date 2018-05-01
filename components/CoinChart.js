@@ -20,21 +20,20 @@ import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 export default class CoinChart extends React.Component {
     render() {
         console.log(this.props.data);
-        const data = [{time: 1524182400, close: 0.3019, high: 0.3102, low: 0.2668, open: 0.2692},
-            {time: 1524268800, close: 0.2852, high: 0.3075, low: 0.2681, open: 0.302} ]
+        const data = [{time: 0, close: 1, high: 0.3102, low: 0.2668, open: 0.2692},
+            {time: 1, close: 1, high: 0.3075, low: 0.2681, open: 0.302} ]
         return (
             <View>
-                {this.props.data.Data ? 
                 <LineChart
                 style={{ height: 300 }}
-                data={ this.props.data.Data } 
+                data={ this.props.data.Data ? this.props.data.Data : data } 
                 yAccessor={({ item }) => item.close}
                 xAccessor={({ item }) => item.time}
                 svg={{ stroke: 'rgb(134, 65, 244)' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid/>
-            </LineChart> : null}
+            </LineChart>
                 
             </View>
         )

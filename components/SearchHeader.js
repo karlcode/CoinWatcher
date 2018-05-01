@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: Platform.OS === "ios" ? 20 : StatusBar.currentHeight,
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    borderBottomLeftRadius: 20,
   },
   title: {
     flex: 1,

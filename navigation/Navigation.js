@@ -31,6 +31,7 @@ const Navigation = TabNavigator(
     tabBarPosition: 'bottom',
     animationEnabled: true,
     swipeEnabled: true,
+    lazy:true,
     tabBarComponent: TabBarBottom,
     removeClippedSubviews: false,
     tabBarOptions: {

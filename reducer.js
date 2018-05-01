@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, CHARTDATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH, CHANGE_PERIOD, FETCHING_CHARTDATA } from "./actions" //Import the actions types constant we defined in our actions
+import { QUOTES_AVAILABLE, ADD_COIN, ADD_QUOTE, UPDATE_QUOTE, DELETE_QUOTE, DATA_AVAILABLE, CHARTDATA_AVAILABLE, GET_PORTFOLIO, FETCHING_DATA, SEARCH_TERM, CLEAR_SEARCH, CHANGE_PERIOD, CHANGE_CHARTPERIOD,  FETCHING_CHARTDATA } from "./actions" //Import the actions types constant we defined in our actions
 import update from 'immutability-helper';
 import SearchInput, { createFilter } from 'react-native-search-filter';
 
-let dataState = { data: [], filteredData: [], isFetching: true, chartData: [], loading:true, crypto: [], added: false, refreshing: false, searchTerm: '', cleared: true, timePeriod: 1, period: 'percent_change_24h', timeCategory: '%24h'};
+let dataState = { data: [], filteredData: [], isFetching: true, chartPeriod: 365, chartData: [], loading:true, crypto: [], added: false, refreshing: false, searchTerm: '', cleared: true, timePeriod: 1, period: 'percent_change_24h', timeCategory: '%24h'};
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
@@ -46,6 +46,11 @@ const dataReducer = (state = dataState, action) => {
             }
             console.log(time_period);
             state = Object.assign({}, state, { timePeriod: action.period, period: time_period});
+        return state;
+        }
+        case CHANGE_CHARTPERIOD: {t
+            console.log(action.chartPeriod);
+            state = Object.assign({}, state, { chartPeriod: action.chartPeriod});
         return state;
         }
         case CLEAR_SEARCH: {
