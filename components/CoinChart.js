@@ -27,9 +27,9 @@ export default class CoinChart extends React.Component {
                 {this.props.data.Data ? 
                 <LineChart
                 style={{ height: 300 }}
-                data={ this.props.data.Data}
+                data={ this.props.data.Data } 
                 yAccessor={({ item }) => item.close}
-                xAccessor={({item}) => item.time}
+                xAccessor={({ item }) => item.time}
                 svg={{ stroke: 'rgb(134, 65, 244)' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
