@@ -52,14 +52,14 @@ export function getData(){
 
     };
 }
-export function getChartData(symbol){
+export function getChartData(symbol, timeParams){
     return (dispatch) => {
         dispatch({type: FETCHING_CHARTDATA, isFetching: true});
-        fetch(`https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=360`)
+        fetch(`https://min-api.cryptocompare.com/data/histo${timeParams.period}?fsym=${symbol}&tsym=USD&limit=${timeParams.limit}`)
         .then(res => res.json())
         .then(json => {
             dispatch({type: CHARTDATA_AVAILABLE, chartData: json, isFetching: false});
-            console.log("FETCHED" + symbol);
+            console.log("THIS WAS CALLED");
         })
         .catch(error => {
             //dispatch error

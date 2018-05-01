@@ -18,18 +18,29 @@ import { LineChart, Grid, StackedBarChart } from 'react-native-svg-charts'
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 
 export default class CoinChart extends React.Component {
-    render() {
-        console.log(this.props.data);
-        const data = [{time: 0, close: 1, high: 0.3102, low: 0.2668, open: 0.2692},
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          data: [{time: 0, close: 1, high: 0.3102, low: 0.2668, open: 0.2692},
             {time: 1, close: 1, high: 0.3075, low: 0.2681, open: 0.302} ]
+        };
+      }
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.data.Data !== this.props.data.Data){
+            this.setState({data: this.props.data.Data})
+        }
+    }
+    render() {
         return (
             <View>
                 <LineChart
                 style={{ height: 300 }}
-                data={ this.props.data.Data ? this.props.data.Data : data } 
+                //data={ this.props.data.Data ? this.props.data.Data : data } 
+                data={this.state.data}
                 yAccessor={({ item }) => item.close}
                 xAccessor={({ item }) => item.time}
-                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                svg={{ stroke: '#FF00FF' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid/>

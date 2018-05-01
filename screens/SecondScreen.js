@@ -10,16 +10,70 @@ import CoinChart from '../components/CoinChart'
 import { iOSUIKit, human } from "react-native-typography";
 
 class SecondScreen extends React.Component {
-  
-  componentDidMount(){
-    this.props.getChartData(this.props.navigation.state.params.symbol)
-  }
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      timeParams: {key: 'daily', period: 'minute', limit: '48&aggregate=30'},
+      selectedIndex: 1
+    };
+    this.updateIndex = this.updateIndex.bind(this)
+  }
+  componentDidMount(){
+    this.props.getChartData(this.props.navigation.state.params.symbol, this.state.timeParams)
+    console.log("called");
+  }
+  
+  onBadgePress = (item) => {
+    console.log(item);
+    //switch(key){
+      //case 'Hour': this.setState({timeParams: {key: 'hourly', period: 'minute', limit: '60'}})
+      //case 'Day': this.setState({timeParams: {key: 'daily', period: 'minute', limit: '48&aggregate=30'}})
+      //case 'Week': this.setState({timeParams: {key: 'weekly', period: 'hour', limit: '168'}})
+  }
+  updateIndex (selectedIndex) {
+    this.setState({selectedIndex}, () => {
+      if(this.state.selectedIndex === 0){
+        this.props.getChartData(this.props.navigation.state.params.symbol, {key: 'hourly', period: 'minute', limit: '60'})
+      } else if(this.state.selectedIndex === 1){
+        this.props.getChartData(this.props.navigation.state.params.symbol, {key: 'daily', period: 'minute', limit: '48&aggregate=30'})
+      } else this.props.getChartData(this.props.navigation.state.params.symbol, {key: 'weekly', period: 'hour', limit: '168'})
+    })
+    
+    
+  }
   render() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
     const coin = this.props.data.find((item) => item.id == params.id)
-    const data = [{key: 'Hour', value: params.percent_change_1h}, {key: 'Day', value: params.percent_change_24h}, {key: 'Week', value: params.percent_change_7d}]
+    const component1 = () => <View>
+                              <Badge 
+                              containerStyle={[this.state.selectedIndex == 0 ? { backgroundColor: 'white', } :{ backgroundColor: 'grey' }  ]}>
+                                  <Text>Hourly</Text>
+                                </Badge>
+                              {coin.percent_change_1h < 0 ? 
+                                <Text style={styles.negative}>{coin.percent_change_1h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                                <Text style={styles.positive}> {coin.percent_change_1h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
+                              </View>
+    const component2 = () => <View>
+                              <Badge 
+                              containerStyle={[this.state.selectedIndex == 1 ? { backgroundColor: 'white' } :{ backgroundColor: 'grey' }]}>
+                                  <Text>Daily</Text>
+                                </Badge>
+                              {coin.percent_change_24h < 0 ? 
+                                <Text style={styles.negative}>{coin.percent_change_24h}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                                <Text style={styles.positive}> {coin.percent_change_24h}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
+                              </View>
+    const component3 = () => <View>
+                              <Badge 
+                              containerStyle={[this.state.selectedIndex == 2 ? { backgroundColor: 'white' } :{ backgroundColor: 'grey' }]}>
+                                  <Text>Weekly</Text>
+                                </Badge>
+                              {coin.percent_change_7d < 0 ? 
+                                <Text style={styles.negative}>{coin.percent_change_7d}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
+                                <Text style={styles.positive}> {coin.percent_change_7d}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
+                              </View>
+    const buttons = [{ element: component1 }, { element: component2 }, { element: component3 }]
     return (
       <View style={styles.container}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -39,24 +93,17 @@ class SecondScreen extends React.Component {
           </View>
           <CoinChart data={this.props.chartData}/>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          {
-              data.map((item) => {
-                return (
-                  <Card key={item.key} containerStyle={{backgroundColor: 'transparent', borderColor: 'transparent' , margin: 15, padding: 0}}>
-                  <View>
-                  <Badge containerStyle={{ backgroundColor: 'white', }}>
-                      <Text>{item.key}</Text>
-                    </Badge>
-                  {item.value < 0 ? 
-                    <Text style={styles.negative}>{item.value}% <Ionicons name={'md-arrow-dropdown'} size={20} /></Text> : 
-                    <Text style={styles.positive}> {item.value}% <Ionicons name={'md-arrow-dropup'} size={20} /></Text> }
-                  </View>
-                  </Card>
-                );
-              })
-            }
+            <ButtonGroup
+              onPress={this.updateIndex}
+              selectedIndex={this.state.selectedIndex}
+              buttons={buttons}
+              underlayColor='black'
+              innerBorderStyle={{color: 'black', backgroundColor: 'black'}}
+              selectedButtonStyle={{backgroundColor: 'black'}}
+              containerStyle={{height: 60, flex: 1, backgroundColor: 'transparent', borderColor: 'transparent'}}
+            />
           </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 30 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20 }}>
             <Text
               style={ [human.footnote, { color: 'grey',flex: 1 }]}>
               Market Cap

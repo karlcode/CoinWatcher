@@ -52,9 +52,11 @@ class ListContainer extends React.Component {
     );
   };
   render() {
+    
     return (
       <View style={styles.container}>
         <FlatList
+          
           ref="listRef"
           data={this.props.cleared ? this.props.data : this.props.filteredData}
           renderItem={this._renderItem}
