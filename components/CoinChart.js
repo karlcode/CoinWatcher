@@ -40,7 +40,7 @@ export default class CoinChart extends React.Component {
                 data={this.state.data}
                 yAccessor={({ item }) => item.close}
                 xAccessor={({ item }) => item.time}
-                svg={{ stroke: '#FF00FF' }}
+                svg={{ stroke: '#FA2474' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid/>

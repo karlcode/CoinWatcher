@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     paddingTop: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderBottomRightRadius: 100
+    borderBottomRightRadius: 20
   },
   title: {
     color: 'white',

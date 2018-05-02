@@ -8,8 +8,8 @@ export default class PortfolioRow extends React.PureComponent {
     const { item } = this.props;
     return(
       <TouchableOpacity 
-          //onPress={() => navigate('SecondScreen', ({...item}))}
-          >
+        onPress={() => this.props.navigation.navigate({key: 'SecondScreen', routeName: 'SecondScreen', params: ({...item})})}>
+          
         <ListItem
         scaleProps={{
           friction: 90,

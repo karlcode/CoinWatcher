@@ -130,9 +130,10 @@ class SecondScreen extends React.Component {
             {Number(coin.available_supply).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Text>
           </View>
-          {coin.added ? null : <ActionButton buttonColor="rgba(231,76,60,1)"  
+          {coin.added ? null : <ActionButton buttonColor="#FA2474"  
+          size={46}
           onPress={()=> {this.props.addCoin(params.id)
-            ToastAndroid.show(`Added new ${params.id} coin`, ToastAndroid.SHORT)
+            //ToastAndroid.show(`Added new ${params.id} coin`, ToastAndroid.SHORT)
             navigate('Portfolio')}}/>}
       </View>
     );

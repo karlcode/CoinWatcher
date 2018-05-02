@@ -10,7 +10,7 @@ export default class Portfolio extends React.Component {
     return (
       <View style={styles.container}>
       <CustomHeader/>
-        <PortfolioContainer />
+        <PortfolioContainer navigation={this.props.navigation}/>
         <View pointerEvents="none" style={{position: 'absolute', bottom: 0, left: 0, right: 0}}>
           <LinearGradient style={{
             

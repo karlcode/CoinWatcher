@@ -36,7 +36,7 @@ const Navigation = TabNavigator(
     removeClippedSubviews: false,
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: 'tomato',                               
+      activeTintColor: '#FA2474',                               
       inactiveTintColor: 'white',
       style: {
         elevation: 0,

@@ -21,16 +21,6 @@ const persistor = persistStore(store)
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export default class App extends React.Component {
-  state = {
-    fontLoaded: false,
-  };
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      'IBMPlexSans': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
-    });
-    this.setState({ fontLoaded: true });
-  }
   render(){
     return (
       <Provider store={store}>
@@ -54,8 +44,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black'
   },
-  /*statusBar: {
-    height: (Platform.OS === 'ios' ? 20 :  StatusBar.currentHeight),
-    backgroundColor: 'white',
-  },*/
 });

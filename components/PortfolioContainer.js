@@ -13,7 +13,7 @@ class PortfolioContainer extends React.Component {
   }
   _renderItem = ({item}) => {
       return (
-        <PortfolioRow item={item}/> 
+        <PortfolioRow item={item} navigation={this.props.navigation}/> 
       );
     }
   noItemDisplay = () => {
