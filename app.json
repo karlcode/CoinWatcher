@@ -2,6 +2,7 @@
   "expo": {
     "name": "Crypto Hound",
     "sdkVersion": "23.0.0",
+    "slug": "https://exp.host/@karl12321/crypto-hound",
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
