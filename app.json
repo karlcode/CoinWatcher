@@ -1,8 +1,11 @@
 {
   "expo": {
+    "name": "Crypto Hound",
     "sdkVersion": "23.0.0",
     "androidStatusBar": {
       "backgroundColor": "#000000"
-    }
+    },
+    "version": "1.0.0",
+    "icon": "./assets/cryptohound.png"
   }
 }
